@@ -8,10 +8,10 @@
   $email = $_POST['email_cadastrado'];
 
   $sql = "select * from usuarios where Email='".$email."'";
-  $resultado = $db->query($sql);
-  if($resultado->num_rows > 0 ){
+  $resultado = sqlsrv_query( $conn, $sql);
+  if(sqlsrv_has_rows($resultado) > 0 ){
     // ACHOU O E-MAIL
-    while ($row = $resultado->fetch_assoc()){
+    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
       $codigoUsuario = $row["IDusuario"];
       $nome = $row["Nome"];
       $login = $row["usuario"];
@@ -20,12 +20,12 @@
     //adicionar no banco;
     $sql = "UPDATE usuarios  SET SenhaTemporaria = '$a' WHERE IDusuario = '".$codigoUsuario."'";
     //sucesso
-    if($db->query($sql)=== TRUE){
+    if(sqlsrv_query( $conn, $sql)=== TRUE){
     }else{
-      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     }
 
-    $db->close();
+    sqlsrv_close($conn); 
 //==========================envia o e-mail com a senha temporaria ==========================================
     $to  = $email;//'scomissao2018@gmail.com';
     $subject = 'REDEFINIR SENHA';

@@ -71,11 +71,11 @@
 
                     $sql = "SELECT * FROM fatores";
 
-                    $resultado = $db->query($sql);
+                    $resultado = sqlsrv_query( $conn, $sql);
 
-                    if($resultado->num_rows > 0 ){
+                    if(sqlsrv_has_rows($resultado) > 0 ){
 
-                      while ($row = $resultado->fetch_assoc()){
+                      while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
 
                           //print_r($row);
 

@@ -22,10 +22,10 @@ for ($i=1; $i <= $nFuncionarios ; $i++) {
     $sql  =  " UPDATE `vendedores` set idCargo = $cargo where idVendedor = $idVendedor ";
 
     $flag = 1;//sucesso
-    if($db->query($sql)=== TRUE){
+    if(sqlsrv_query( $conn, $sql)=== TRUE){
       echo "<HR>"."Registros atualizados com sucesso";
     }else{
-      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
       $flag = 2; // erro
     }
 

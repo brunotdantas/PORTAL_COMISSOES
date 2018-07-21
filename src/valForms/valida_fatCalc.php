@@ -22,9 +22,9 @@ for ($i=1; $i <=$numFatores ; $i++) {
     $sql .= " VALUES ($idFator,$ativo,$porcentagem,$valor,'$descFator','$aplica') ";
 
     $flag = 1;//sucesso
-    if($db->query($sql)=== TRUE){
+    if(sqlsrv_query( $conn, $sql)=== TRUE){
     }else{
-      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+      echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
       $flag = 2; // erro
     }
 }

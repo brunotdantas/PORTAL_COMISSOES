@@ -22,15 +22,15 @@ if(isset($_POST['vlMetaAnual'])){
 
   // Cria uma tabela com as lojas existentes
   $sql  = "CREATE TEMPORARY TABLE IF NOT EXISTS ListaLojas AS (SELECT idLojas FROM `lojas`);";
-  $db->query($sql) ;
+  sqlsrv_query( $conn, $sql) ;
 
   $sql  = "select * from ListaLojas";
-  $resultado = $db->query($sql);
+  $resultado = sqlsrv_query( $conn, $sql);
 
-  if($resultado->num_rows > 0 ){
+  if(sqlsrv_has_rows($resultado) > 0 ){
 
     $retorno = '';
-    while ($row = $resultado->fetch_assoc()){
+    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
       $idloja = $row["idLojas"];
 
       for ($i=1; $i <= 12 ; $i++) {  // Looping de lojas
@@ -38,10 +38,10 @@ if(isset($_POST['vlMetaAnual'])){
         $sql .= "VALUES ($idloja,'".sprintf("%02d", $i).$ano."',$meta)";
     
         $flag = 1;//sucesso
-        if($db->query($sql)=== TRUE){
+        if(sqlsrv_query( $conn, $sql)=== TRUE){
          /// echo "<HR>"."Registros inseridos/atualizados com sucesso";
         }else{
-          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
           $flag = 2; // erro
         }
       }
@@ -62,10 +62,10 @@ if(isset($_POST['vlMetaAnual'])){
       $sql .= "VALUES ($loja,'$periodo',$vlMeta)";
 
       $flag = 1;//sucesso
-      if($db->query($sql)=== TRUE){
+      if(sqlsrv_query( $conn, $sql)=== TRUE){
       //  echo "<HR>"."Registros inseridos com sucesso";
       }else{
-        echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+        echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
         $flag = 2; // erro
       }
     }

@@ -13,14 +13,14 @@
   switch ($tpMeta) {
     case 0:
       $sql = " CREATE TEMPORARY TABLE IF NOT EXISTS table2 AS (select idLojas,valorMeta from metas where periodo = '$periodo');";  
-      $resultado = $db->query($sql);
+      $resultado = sqlsrv_query( $conn, $sql);
       
       $sql = "select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
               left join table2 m on l.idLojas = m.idLojas";
 
-      $resultado = $db->query($sql);
+      $resultado = sqlsrv_query( $conn, $sql);
 
-      if($resultado->num_rows > 0 ){
+      if(sqlsrv_has_rows($resultado) > 0 ){
 
         $retorno .= '<form class="" action="../valForms/validaMeta.php" method="post">';
 
@@ -36,7 +36,7 @@
               <th>Meta</th>
             </tr>';
 
-        while ($row = $resultado->fetch_assoc()){
+        while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
 
             $contador++;
             $idlojas = $row["idLojas"];

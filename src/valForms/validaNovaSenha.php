@@ -17,22 +17,24 @@
         header('Refresh: 3; URL=../../index.php');
       }else{
         $sql = "UPDATE usuarios  SET primeiroAcesso = 0, Senha = '$senha1', SenhaTemporaria = '' WHERE CPF = '". $_SESSION['cpf']."'";//salvar a nova senha
-        if($db->query($sql)=== TRUE){
+        $resultado = sqlsrv_query($conn, $sql);
+        if($resultado=== TRUE){
           Echo 'Senha alterada com sucesso! Você será redirecionado em 3 segundos ...';
           header('Refresh: 3; URL=../../index.php');
         }else{
-          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
+          ;
         }
       }
-      $db->close();
+      sqlsrv_close($conn);  
     }else{
       Echo 'Cadastro desativado!';
     }
   }else{
     $sql = "select * from usuarios where SenhaTemporaria='".$Confirma_Email."'";  //verificar se o token e a senhaTemporaria são iguais
-    $resultado = $db->query($sql);
-      if($resultado->num_rows > 0 ){
-        while ($row = $resultado->fetch_assoc()){
+    $resultado = sqlsrv_query($conn, $sql);
+      if(sqlsrv_has_rows($resultado) ){
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
           $codigoUsuario = $row['IDusuario'];//verificar o id do usuario
           $ativo = $row['ativo'];
         }
@@ -42,14 +44,14 @@
             header('Refresh: 3; URL=../../index.php');
         }else{
             $sql = "UPDATE usuarios  SET Senha = '$senha1', SenhaTemporaria = '' WHERE IDusuario = '".$codigoUsuario."'";//salvar a nova senha
-            if($db->query($sql)=== TRUE){
+            if(sqlsrv_query( $conn, $sql) === TRUE){
               Echo 'Senha alterada com sucesso! Você será redirecionado em 3 segundos ...';
               header('Refresh: 3; URL=../../index.php');
             }else{
-              echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+              echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
             }
           }
-          $db->close();
+          sqlsrv_close($conn); 
         }else{
           Echo 'Cadastro desativado!';
         }

@@ -52,10 +52,10 @@
             inner join portal.tipo_usuarios tp on u.idTipo = tp.idTipo
             ";
 
-            $resultado = $db->query($sql);
+            $resultado = sqlsrv_query( $conn, $sql);
 
-            if($resultado->num_rows > 0 ){
-              while ($row = $resultado->fetch_assoc()){
+            if(sqlsrv_has_rows($resultado) > 0 ){
+              while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
                $nome = $row["Nome"];
                 $email   = $row["Email"];
                 $tipo   = $row["descricaoTipo"];

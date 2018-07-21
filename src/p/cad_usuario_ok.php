@@ -19,7 +19,7 @@ $sql = "
   WHERE CPF = '".$cpf_usuario."'
 ";
 
-$row = $db->query($sql);
+$row = sqlsrv_query( $conn, $sql);
 $msg = '';
 $existe = 0;
 
@@ -132,7 +132,7 @@ if($row->num_rows>0){
               $sql = " SELECT * from tipo_usuarios ";
               }
 
-              $resultado = $db->query($sql);
+              $resultado = sqlsrv_query( $conn, $sql);
               if($resultado-> num_rows>0){
                 while($dados=$resultado->fetch_assoc()){
                   echo '<option value="'.$dados["idTipo"].'">  '.$dados["descricaoTipo"].'</option>';

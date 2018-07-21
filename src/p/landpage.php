@@ -15,7 +15,7 @@
 $nLojas = 0;
 
 $sql = " SELECT COUNT(*) nLojas FROM `lojas` WHERE 1  ";
-$row = $db->query($sql);
+$row = sqlsrv_query( $conn, $sql);
 if($row-> num_rows>0){
   while($dados=$row->fetch_assoc()){
     $nLojas= $dados["nLojas"];
@@ -26,7 +26,7 @@ if($row-> num_rows>0){
 $nVendedores = 0;
 
 $sql = "SELECT COUNT(*) nVend FROM `vendedores`";
-$row = $db->query($sql);
+$row = sqlsrv_query( $conn, $sql);
 if($row-> num_rows>0){
   while($dados=$row->fetch_assoc()){
     $nVendedores = $dados["nVend"];

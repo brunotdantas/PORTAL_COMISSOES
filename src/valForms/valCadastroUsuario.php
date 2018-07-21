@@ -14,9 +14,9 @@ switch ($botaoClicado) {
   $sql = "UPDATE usuarios  SET Nome = '$nome', Email = '$email', usuario = '$usuario', idTipo = '$tipo'  WHERE CPF = '".$cpf."'";
 
   $flag = 1;//sucesso
-  if($db->query($sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)=== TRUE){
   }else{
-    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag = 6; // erro
   }
   break;
@@ -24,10 +24,10 @@ switch ($botaoClicado) {
   case 'botaoDesativar':
   $sql = "UPDATE usuarios  SET ativo = '0'  WHERE CPF = '".$cpf."'";
   $flag = 2;//sucesso
-  if($db->query($sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)=== TRUE){
 
   }else{
-    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag = 6; // erro
   }
   break;
@@ -35,10 +35,10 @@ switch ($botaoClicado) {
   case 'botaoAtivar':
   $sql = "UPDATE usuarios  SET ativo = '1'  WHERE CPF = '".$cpf."'";
   $flag = 4;//sucesso
-  if($db->query($sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)=== TRUE){
 
   }else{
-    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag =6; // erro
   }
   break;
@@ -49,7 +49,7 @@ switch ($botaoClicado) {
 
   $sql = "INSERT INTO usuarios (cpf, nome, email, idTipo, usuario,  Senha,ativo,primeiroAcesso) VALUES('$cpf', '$nome', '$email', '$tipo', '$usuario', '$sTemp',1,1) " ;
   $flag = 5;//sucesso
-  if($db->query($sql)=== TRUE){ 
+  if(sqlsrv_query( $conn, $sql)=== TRUE){ 
   // Envia o e-mail para o usuário
   //'$usuario
     $to  = $email;
@@ -76,7 +76,7 @@ switch ($botaoClicado) {
     $headers .= 'From: Cadastrar nova senha <birthday@example.com>' . "\r\n";
     mail($to, $subject, $message, $headers); 
   }else{
-    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".$db->error;
+    echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag = 6; // erro
   }
 
