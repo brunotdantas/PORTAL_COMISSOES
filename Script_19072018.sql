@@ -11,8 +11,11 @@ begin
 	ALTER DATABASE Portal SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 	DROP DATABASE Portal ;
 end
-CREATE DATABASE Portal
+go
+CREATE DATABASE Portal;
+go
 USE Portal ;
+go
 -- -----------------------------------------------------
 -- Table tipo_usuarios
 -- -----------------------------------------------------

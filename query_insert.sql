@@ -1,4 +1,4 @@
-
+use Portal
 ----------------------------------------------------------------------------------
 ----------------------------------------- lista de inserts 
 ----------------------------------------------------------------------------------
@@ -7,11 +7,11 @@ INSERT INTO [dbo].[Cargo_Lojas]
 VALUES
 ('Gerente'),('Vendedor');
 
-INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo, create_time, update_time) VALUES ( 'Valor pago sobre o total de venda da loja', 1.3, NULL, 1, 1, '2018-05-23 13:08:48', NULL)
-INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo, create_time, update_time) VALUES ( 'Prêmio por atingir 103% da meta da loja', NULL, 144.5, 1, 1, '2018-05-23 13:08:48', NULL)
-INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo, create_time, update_time) VALUES ( 'Prêmio por atingir 107% da meta da loja', NULL, 120	, 1, 1, '2018-05-23 13:08:48', NULL)
-INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo, create_time, update_time) VALUES ( 'Prêmio por atingir 110% da meta da loja', NULL, 500	, 1, 0, '2018-05-23 13:08:48', NULL)
-INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo, create_time, update_time) VALUES ( 'Valor pago sobre o total de venda do vendedor', 2.9	, 1, 2, 0, '2018-05-23 13:08:48', NULL)
+INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo) VALUES ( 'Valor pago sobre o total de venda da loja', 1.3, NULL, 1, 1		)
+INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo) VALUES ( 'Prêmio por atingir 103% da meta da loja', NULL, 144.5, 1, 1		)
+INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo) VALUES ( 'Prêmio por atingir 107% da meta da loja', NULL, 120	, 1, 1		)
+INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo) VALUES ( 'Prêmio por atingir 110% da meta da loja', NULL, 500	, 1, 0		)
+INSERT INTO [dbo].fatores (descricaoFator, vlPorcentagem, vlReais, idCargo, ativo) VALUES ( 'Valor pago sobre o total de venda do vendedor', 2.9	, 1, 2, 0	)
 
 INSERT INTO lojas (idLojas, CNPJ, NomeLoja, Apelido_Loja) VALUES (2, 210, 'LJ.CLI-IGUATEMI', NULL)
 INSERT INTO lojas (idLojas, CNPJ, NomeLoja, Apelido_Loja) VALUES (3, 309, 'LJ.CLI-J.SUL', NULL)
@@ -63,9 +63,9 @@ INSERT INTO lojas (idLojas, CNPJ, NomeLoja, Apelido_Loja) VALUES (49, 4983, 'LJ.
 INSERT INTO lojas (idLojas, CNPJ, NomeLoja, Apelido_Loja) VALUES (50, 5017, 'LJ.MAC-SALVADOR', NULL)
 INSERT INTO lojas (idLojas, CNPJ, NomeLoja, Apelido_Loja) VALUES (51, 5106, 'LJ.MAC-MANAUS', NULL);
 
-INSERT INTO tipo_usuarios (descricaoTipo, ativo, create_time) VALUES ( 'Administrador', 1, '2018-04-26 18:12:41');
-INSERT INTO tipo_usuarios (descricaoTipo, ativo, create_time) VALUES ( 'Coordenador', 1, '2018-04-26 18:12:41');
-INSERT INTO tipo_usuarios (descricaoTipo, ativo, create_time) VALUES ( 'RH', 1, '2018-04-26 18:12:41');
+INSERT INTO tipo_usuarios (descricaoTipo, ativo) VALUES ( 'Administrador', 1);
+INSERT INTO tipo_usuarios (descricaoTipo, ativo) VALUES ( 'Coordenador', 1	);
+INSERT INTO tipo_usuarios (descricaoTipo, ativo) VALUES ( 'RH', 1			);
 
 INSERT INTO usuarios (Nome, Email, Senha, idTipo, CPF, usuario, SenhaTemporaria, ativo, primeiroAcesso) VALUES
 ('Bruno Dantas', 'brunodantas01@gmail.com', '123', 1, '08356060400', 'bruno', '', 1, 1);
