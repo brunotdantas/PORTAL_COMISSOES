@@ -19,12 +19,12 @@ $sql = "
   WHERE CPF = '".$cpf_usuario."'
 ";
 
-$row = sqlsrv_query( $conn, $sql);
+$resultado = sqlsrv_query( $conn, $sql);
 $msg = '';
 $existe = 0;
 
-if($row->num_rows>0){
-  while($dados = $row->fetch_assoc()){
+if(sqlsrv_has_rows($resultado)){
+  while($dados = sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
     $campo_cpf = $dados["CPF"];
     $campo_nome = $dados["Nome"];
     $campo_email = $dados["Email"];

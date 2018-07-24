@@ -48,13 +48,13 @@
                 u.primeiroAcesso,
                 tp.descricaoTipo
                 
-            FROM portal.usuarios u
-            inner join portal.tipo_usuarios tp on u.idTipo = tp.idTipo
+            FROM usuarios u
+            inner join tipo_usuarios tp on u.idTipo = tp.idTipo
             ";
 
             $resultado = sqlsrv_query( $conn, $sql);
 
-            if(sqlsrv_has_rows($resultado) > 0 ){
+            if(sqlsrv_has_rows($resultado)){
               while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
                $nome = $row["Nome"];
                 $email   = $row["Email"];

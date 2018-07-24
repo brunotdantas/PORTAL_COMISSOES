@@ -20,7 +20,7 @@
 
       $resultado = sqlsrv_query( $conn, $sql);
 
-      if(sqlsrv_has_rows($resultado) > 0 ){
+      if(sqlsrv_has_rows($resultado)){
 
         $retorno .= '<form class="" action="../valForms/validaMeta.php" method="post">';
 

@@ -14,24 +14,22 @@
 // Busca Numero de lojas 
 $nLojas = 0;
 
-$sql = " SELECT COUNT(*) nLojas FROM `lojas` WHERE 1  ";
-$row = sqlsrv_query( $conn, $sql);
-if($row-> num_rows>0){
-  while($dados=$row->fetch_assoc()){
+$sql = " SELECT COUNT(*) nLojas FROM lojas  ";
+$resultado = sqlsrv_query( $conn, $sql);
+  while($dados= sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
     $nLojas= $dados["nLojas"];
   }
-}
 
 // Busca Número de vendedores
 $nVendedores = 0;
-
-$sql = "SELECT COUNT(*) nVend FROM `vendedores`";
-$row = sqlsrv_query( $conn, $sql);
-if($row-> num_rows>0){
-  while($dados=$row->fetch_assoc()){
-    $nVendedores = $dados["nVend"];
+$sql = " SELECT COUNT(*) nVend FROM vendedores  ";
+$resultado = sqlsrv_query( $conn, $sql);
+  while($dados=sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
+    $nVendedores= $dados["nVend"];
   }
-}
+
+
+
 
 ?>
 

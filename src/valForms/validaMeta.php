@@ -27,7 +27,7 @@ if(isset($_POST['vlMetaAnual'])){
   $sql  = "select * from ListaLojas";
   $resultado = sqlsrv_query( $conn, $sql);
 
-  if(sqlsrv_has_rows($resultado) > 0 ){
+  if(sqlsrv_has_rows($resultado)){
 
     $retorno = '';
     while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
