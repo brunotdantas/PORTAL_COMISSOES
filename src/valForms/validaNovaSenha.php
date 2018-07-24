@@ -17,14 +17,13 @@
         header('Refresh: 3; URL=../../index.php');
       }else{
         $sql = "UPDATE usuarios  SET primeiroAcesso = 0, Senha = '$senha1', SenhaTemporaria = '' WHERE CPF = '". $_SESSION['cpf']."'";//salvar a nova senha
-        $resultado = sqlsrv_query($conn, $sql);
-        if($resultado=== TRUE){
+        if (sqlsrv_query($conn, $sql)) {  
           Echo 'Senha alterada com sucesso! Você será redirecionado em 3 segundos ...';
           header('Refresh: 3; URL=../../index.php');
-        }else{
-          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
-          ;
-        }
+        } else {  
+          echo "Error in statement execution.\n";  
+          print_r(sqlsrv_errors(), true);  
+        }  
       }
       sqlsrv_close($conn);  
     }else{
