@@ -1,4 +1,4 @@
-<?php //TODO se o usário logado acessar o index, direcionar pra landpage
+<?php //TODO: se o usário logado acessar o index, direcionar pra landpage
 ?>
 <!DOCTYPE html>
 <html>
