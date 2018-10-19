@@ -1,4 +1,5 @@
 <?php
+   /*
    define('DB_SERVER', '.\SQLEXPRESS');//'HEL001259\SQLEXPRESS');  
    define('DB_USERNAME', 'php');
    define('DB_PASSWORD', 'portal');
@@ -16,8 +17,8 @@
     if (!$conn){
         echo "Connection could not be established.<br />";
         die( print_r( sqlsrv_errors(), true));
-    }
-/*
+    }*/
+
     $sql = "SELECT 'olá Mundo' as Nome";
     $stmt = sqlsrv_query( $conn, $sql);
     if( $stmt === false ) {
@@ -28,5 +29,5 @@
 	    echo $row['Nome']."</br>";
     }
 
-*/
+
 ?>
