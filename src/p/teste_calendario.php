@@ -2,25 +2,14 @@
   include '../pFixas/cabec.php';
 //--- Modelo principal
 ?>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  <!-- =============================================== -->
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        <!-- nome meta -->
+        <!-- <small>it all starts here</small>-->
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">Blank page</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -29,56 +18,75 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Cadastro de metas de vendas</h3>
+          <br>          <br>
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-         
         <form action="validaTeste.php" method = "GET">
-        <input id="demo" type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+            <!-- input group -->
+            <label>Nome da Meta:</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-text-width"></i>
+              </div> 
+              <!--<input class="form-control" placeholder="Enter ..." disabled="" type="text"> -->
+                <input class="form-control" type="text" name="nomeMeta" >                    
+            </div>
+            <!-- /.input group -->
+            <br>
+            <!-- Date range -->
+            <div class="form-group">
+              <label>Escolha o tempo de validade da meta:</label>
 
-        <script>
-            $('#demo').daterangepicker({
-                "autoApply": true,
-                "showDropdowns": true,
-                "startDate": moment(),
-                "minDate": moment(),
-                locale: {
-                "format": "DD/MM/YYYY",
-                "monthNames": [
-                        "Janeiro",
-                        "Fevereiro",
-                        "Março",
-                        "Abril",
-                        "Maio",
-                        "Junho",
-                        "Julho",
-                        "Agosto",
-                        "Setembro",
-                        "Outubro",
-                        "Novembro",
-                        "Dezembro"
-                    ]
-                
-                }
-            });
-        </script>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div> 
+                <input class="form-control" type="text" data-toggle="daterangepicker" maxlength="23" name="timestamp" data-filter-type="date-range">                    
+              </div>
+              <!-- /.input group -->
+            </div>
+            <br>
 
-        <button type = "submit">a
-        </form>
+            <div class="form-group">
+              <label>Disabled Result</label>
+              <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <option selected="selected">Alabama</option>
+                <option>Alaska</option>
+                <!-- Se precisar desabilitar algum resultado:
+                    <option disabled="disabled">California (disabled)</option>
+                -->
+                <option>Delaware</option>
+                <option>Tennessee</option>
+                <option>Texas</option>
+                <option>Washington</option>
+              </select>
+            </div>
 
-        </div>
+
+            <!--
+              <div class="form-group">
+                <label>Multiple</label>
+                <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option>Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+           
+           <!-- Se necessário for deixo essa parte para multiplas escolhas --> 
+
+
+
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
+                <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        </form>
         <!-- /.box-footer-->
       </div>
       <!-- /.box -->
@@ -88,6 +96,50 @@
   </div>
   <!-- /.content-wrapper -->
 
+<!-- Page script -->
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+
+    $('[data-filter-type="date-range"]').daterangepicker({
+        showDropdowns: true,
+        minDate: moment(),
+        drops:'down',
+
+/*        ranges: {
+            'Hoy': [moment(), moment()],
+            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
+            'Última semana': [moment().subtract(6, 'days'), moment()],
+            'Últimas 2 semanas': [moment().subtract(13, 'days'), moment()],
+            'Este mes': [moment().startOf('month'), moment().endOf('month')],
+            'Mes anterior': [moment().subtract(1, 'month').startOf('month'),
+                moment().subtract(1, 'month').endOf('month')]
+        },*/
+        autoUpdateInput: true,
+        applyClass: 'btn-sm btn-primary',
+        cancelClass: 'btn-sm btn-default',
+        locale: {
+            format: 'DD/MM/YYYY',
+            applyLabel: 'Aplicar',
+            cancelLabel: 'Limpar',
+            fromLabel: 'Desde',
+            toLabel: 'Até',
+            customRangeLabel: 'Seleccionar período',
+            daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro',
+                'Dezembro'],
+            firstDay: 1
+        }
+    });
+
+
+
+  })
+</script>
 
 <?php include '../pFixas/footer.php'; ?>
 

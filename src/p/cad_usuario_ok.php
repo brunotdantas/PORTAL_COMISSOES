@@ -31,10 +31,10 @@ if(sqlsrv_has_rows($resultado)){
     $campo_usuario = $dados["usuario"];
     $campo_tipo = $dados["idTipo"];
     $nome_tipo = $dados["descricaoTipo"];
-    $abilitado = $dados["ativo"];
+    $habilitado = $dados["ativo"];
     $existe = 1;
 
-    if($abilitado == 1){
+    if($habilitado == 1){
       $campo_desativar_usuario="unchecked";
       $labelBotaoDesativar='Desativar';
       $modalDesativar ='#modal-danger';      
@@ -133,9 +133,9 @@ if(sqlsrv_has_rows($resultado)){
               }
 
               $resultado = sqlsrv_query( $conn, $sql);
-              if($resultado-> num_rows>0){
-                while($dados=$resultado->fetch_assoc()){
-                  echo '<option value="'.$dados["idTipo"].'">  '.$dados["descricaoTipo"].'</option>';
+              if(sqlsrv_has_rows($resultado)){
+                while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+                  echo '<option value="'.$row["idTipo"].'">  '.$row["descricaoTipo"].'</option>';
                 }
               }
                 //-------------------------------------------------------------

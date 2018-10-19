@@ -42,6 +42,7 @@
 
             case 2:
                 echo '<li class="active"><a href="../p/manut_metas.php"><i class="fa fa-money"></i>Manutenção de metas</a></li>';
+                echo '<li class="active"><a href="../p/manut_metas_NOVO.php"><i class="fa fa-money"></i>NOVO>Manutenção de metas</a></li>';                
                 echo '<li class="active"><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';
                 echo '<li class="active"><a href="../p/manut_funcionarios.php"><i class="fa fa-users"></i>Manutenção de funcionários</a></li>';
   

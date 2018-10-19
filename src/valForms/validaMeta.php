@@ -21,7 +21,7 @@ if(isset($_POST['vlMetaAnual'])){
   $ano = right(TRIM($_POST['periodo']),4);
 
   // Cria uma tabela com as lojas existentes
-  $sql  = "CREATE TEMPORARY TABLE IF NOT EXISTS ListaLojas AS (SELECT idLojas FROM `lojas`);";
+  $sql  = "CREATE TEMPORARY TABLE IF NOT EXISTS ListaLojas AS (SELECT idLojas FROM lojas);";
   sqlsrv_query( $conn, $sql) ;
 
   $sql  = "select * from ListaLojas";
@@ -38,7 +38,7 @@ if(isset($_POST['vlMetaAnual'])){
         $sql .= "VALUES ($idloja,'".sprintf("%02d", $i).$ano."',$meta)";
     
         $flag = 1;//sucesso
-        if(sqlsrv_query( $conn, $sql)=== TRUE){
+        if(sqlsrv_query( $conn, $sql)){
          /// echo "<HR>"."Registros inseridos/atualizados com sucesso";
         }else{
           echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
@@ -62,7 +62,7 @@ if(isset($_POST['vlMetaAnual'])){
       $sql .= "VALUES ($loja,'$periodo',$vlMeta)";
 
       $flag = 1;//sucesso
-      if(sqlsrv_query( $conn, $sql)=== TRUE){
+      if(sqlsrv_query( $conn, $sql)){
       //  echo "<HR>"."Registros inseridos com sucesso";
       }else{
         echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );

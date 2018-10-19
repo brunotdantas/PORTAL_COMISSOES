@@ -1,4 +1,7 @@
 <?php
+// TODO: 1. Pensar em como adicionar dinamicamente os fatores, ou seja 
+// TODO:    o próprio usuário poder adicionar
+
   include '../pFixas/cabec.php';
   $mensagem = '';
 
@@ -69,49 +72,53 @@
                     // Le quantas lojas existem
                     $contador = 0;
 
-                    $sql = "SELECT * FROM fatores";
+                    $sql = "
+                    SELECT idFator ,descricaoFator ,vlPorcentagem ,vlReais ,ativo ,create_time ,update_time ,cl.idCargo,cl.Descricao FROM fatores f 
+                    inner join Cargo_Lojas cl on cl.idCargo =  f.idCargo                 
+                    ";
 
                     $resultado = sqlsrv_query( $conn, $sql);
 
                     if(sqlsrv_has_rows($resultado)){
 
                       while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+                      //print_r($row);
 
-                          //print_r($row);
+                        $ativo          = ($row["ativo"] == 1 ? 'checked' : '');
 
-                          $ativo          = ($row["ativo"] == 1 ? 'checked' : '');
-                          $descricaoFator = $row["descricaoFator"];
-                          $vlPorcentagem  = $row["vlPorcentagem"];
-                          $valor          = $row["vlReais"];
-                          $seAplicaA      = ($row["idCargo"]==1 ? "Gerente" : "Vendedor" );
-                          $idFator        = $row["idFator"];
+                        $descricaoFator = $row["descricaoFator"];
+                        $vlPorcentagem  = $row["vlPorcentagem"];
+                        $valor          = $row["vlReais"];
+                        $seAplicaA      = $row["Descricao"];
+                        $idCargo        = $row["idCargo"];
+                        $idFator        = $row["idFator"];
 
-                          $contador++;
+                        $contador++;
 
-                          echo '
-                          <tr>
-                            <td>
-                              <input class="form-control"  type="text" name="idFat'.$contador.'" value="'.$idFator.'" readonly>
-                            </td>
-                            <td>
-                              <input type="checkbox" name="ativo'.$contador.'" '.$ativo.'>
-                            </td>
-                            <td>'.$seAplicaA.'</td> <input type="hidden" name="aplica'.$contador.'" value="'.$seAplicaA.'">
-                            <td>'.$descricaoFator.'</td><input type="hidden" name="descFator'.$contador.'" value="'.$descricaoFator.'">                            
-                            <td>
-                              <div class="input-group">
-                                <input class="form-control" onkeypress="return isNumberKey(event)"   type="text" name="Porcentagem'.$contador.'" value="'.$vlPorcentagem.'" '.($row["vlPorcentagem"] === NULL ? "readonly" : '').'>
-                                <span class="input-group-addon">%</span>
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <input id="campoNumero" onkeypress="return isNumberKey(event)" class="form-control" type="text" name="Valor'.$contador.'" value="'.$valor.'" '.($row["vlReais"] === NULL ? "readonly" : '').'>
-                                <span class="input-group-addon">R$</span>
-                              </div>
-                            </td>
-                          </tr>
-                          ';
+                        echo '
+                        <tr>
+                          <td>
+                            <input class="form-control"  type="text" name="idFat'.$contador.'" value="'.$idFator.'" readonly>
+                          </td>
+                          <td>
+                            <input type="checkbox" name="ativo'.$contador.'" '.$ativo.'>
+                          </td>
+                          <td>'.$seAplicaA.'</td> <input type="hidden" name="aplica'.$contador.'" value="'.$idCargo.'">
+                          <td>'.$descricaoFator.'</td><input type="hidden" name="descFator'.$contador.'" value="'.$descricaoFator.'">                            
+                          <td>
+                            <div class="input-group">
+                              <input class="form-control" onkeypress="return isNumberKey(event)"   type="text" name="Porcentagem'.$contador.'" value="'.$vlPorcentagem.'" '.($row["vlPorcentagem"] === NULL ? "readonly" : '').'>
+                              <span class="input-group-addon">%</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input id="campoNumero" onkeypress="return isNumberKey(event)" class="form-control" type="text" name="Valor'.$contador.'" value="'.$valor.'" '.($row["vlReais"] === NULL ? "readonly" : '').'>
+                              <span class="input-group-addon">R$</span>
+                            </div>
+                          </td>
+                        </tr>
+                        ';
                       }
                     }
                   ?>

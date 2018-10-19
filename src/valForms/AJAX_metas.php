@@ -12,12 +12,25 @@
 
   switch ($tpMeta) {
     case 0:
-      $sql = " CREATE TEMPORARY TABLE IF NOT EXISTS table2 AS (select idLojas,valorMeta from metas where periodo = '$periodo');";  
-      $resultado = sqlsrv_query( $conn, $sql);
+/*
+//      $sql = " select idLojas,valorMeta into table2 from metas where periodo = '$periodo';";  
+ //     $resultado = sqlsrv_query( $conn, $sql);
       
-      $sql = "select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
-              left join table2 m on l.idLojas = m.idLojas";
+      $sql = "
+              select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
+              left join Metas m on l.idLojas = m.idLojas
+      			  where m.periodo = '$periodo'
+              ";
+*/
 
+
+      $sql = " select idLojas,valorMeta into #table2 from metas where periodo = '$periodo';";  
+//      $resultado = sqlsrv_query( $conn, $sql);
+      
+      $sql .= " select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
+              left join #table2 m on l.idLojas = m.idLojas;";
+
+      // TODO esse resultado traz branco
       $resultado = sqlsrv_query( $conn, $sql);
 
       if(sqlsrv_has_rows($resultado)){
@@ -61,6 +74,8 @@
             ';
         }
       
+      }else{
+        die( print_r( sqlsrv_errors(), true));
       }
 
       $retorno .= ' <input type="hidden" name="numMetas" value="'.$contador.'"></tbody></table>';
@@ -69,7 +84,6 @@
       $retorno .= ' </form></div><!-- /.box -->'; 
 
       break;
-    
     case 1:
       $retorno .= '
 

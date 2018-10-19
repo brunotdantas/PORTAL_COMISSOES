@@ -4,16 +4,13 @@ $user = "teste";
 if(isset($_GET['token'])){
     $token = $_GET['token'];
 }else{
-    $token = '0';
-    session_start();
-    if (isset($_SESSION['primeiroLogin'])){
-      if ($_SESSION['primeiroLogin'] == 1){
-          $token="primeiroAcesso";
-      }
+  $token = '0';
+  session_start();
+  if (isset($_SESSION['primeiroLogin'])){
+    if ($_SESSION['primeiroLogin'] == 1){
+        $token="primeiroAcesso";
     }
-
-
-
+  }
 }
 ?>
 <!DOCTYPE html>

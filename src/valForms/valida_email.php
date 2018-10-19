@@ -20,7 +20,7 @@
     //adicionar no banco;
     $sql = "UPDATE usuarios  SET SenhaTemporaria = '$a' WHERE IDusuario = '".$codigoUsuario."'";
     //sucesso
-    if(sqlsrv_query( $conn, $sql)=== TRUE){
+    if(sqlsrv_query( $conn, $sql)){
     }else{
       echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     }

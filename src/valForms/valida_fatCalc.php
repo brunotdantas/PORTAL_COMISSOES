@@ -15,14 +15,25 @@ for ($i=1; $i <=$numFatores ; $i++) {
     $ativo = (isset($_POST["ativo$i"]) ? 1 : 0);
     $porcentagem = (empty($_POST["Porcentagem$i"]) ? 'NULL' : $_POST["Porcentagem$i"]);
     $valor = (empty($_POST["Valor$i"]) ? 'NULL' : $_POST["Valor$i"]);
-    $aplica = ($_POST["aplica$i"]=="Gerente" ? 1 : 0);
+    $aplica = $_POST["aplica$i"];
     $descFator = $_POST["descFator$i"];
-
-    $sql  = "REPLACE INTO `fatores`(`idFator`, `ativo`, `vlPorcentagem`, `vlReais`,`descricaoFator`,`idCargo`) ";
-    $sql .= " VALUES ($idFator,$ativo,$porcentagem,$valor,'$descFator','$aplica') ";
+    
+    $sql = " IF EXISTS (SELECT idFator FROM fatores where idFator = $idFator) ";
+    $sql .= " begin ";
+    $sql .= "   update fatores set " ;
+    $sql .= "     ativo			= $ativo	,  ";
+    $sql .= "     vlPorcentagem	= $porcentagem	, "; 
+    $sql .= "     vlReais			= $valor	, ";
+    $sql .= "     descricaoFator	= '$descFator'	, " ;
+    $sql .= "     idCargo			= '$aplica' ";
+    $sql .= "    where ";
+    $sql .= "     idFator = $idFator ";
+    $sql .= " end ";
+    $sql .= " else insert into  fatores(ativo, vlPorcentagem, vlReais,descricaoFator,idCargo)  ";
+    $sql .= " VALUES ($ativo,$porcentagem,$valor,'$descFator',$aplica)  "; 
 
     $flag = 1;//sucesso
-    if(sqlsrv_query( $conn, $sql)=== TRUE){
+    if(sqlsrv_query( $conn, $sql)){
     }else{
       echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
       $flag = 2; // erro

@@ -4,21 +4,20 @@
    define('DB_PASSWORD', 'portal');
    define('DB_DATABASE', 'Portal');
 
-    $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD);
+    $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
     $conn = sqlsrv_connect( DB_SERVER, $connectionInfo);
 
     if( !$conn ) {
         // Se não conseguir logar com .\SQLEXPRESS
-        $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD);
-        $conn = sqlsrv_connect( 'localhost', $connectionInfo);
-        
-    }
+        $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
+        $conn = sqlsrv_connect( 'localhost', $connectionInfo);    
+    }   
     
     if (!$conn){
         echo "Connection could not be established.<br />";
         die( print_r( sqlsrv_errors(), true));
     }
-
+/*
     $sql = "SELECT 'olá Mundo' as Nome";
     $stmt = sqlsrv_query( $conn, $sql);
     if( $stmt === false ) {
@@ -29,5 +28,5 @@
 	    echo $row['Nome']."</br>";
     }
 
-
+*/
 ?>

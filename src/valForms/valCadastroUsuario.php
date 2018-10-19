@@ -14,7 +14,7 @@ switch ($botaoClicado) {
   $sql = "UPDATE usuarios  SET Nome = '$nome', Email = '$email', usuario = '$usuario', idTipo = '$tipo'  WHERE CPF = '".$cpf."'";
 
   $flag = 1;//sucesso
-  if(sqlsrv_query( $conn, $sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)){
   }else{
     echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag = 6; // erro
@@ -24,7 +24,7 @@ switch ($botaoClicado) {
   case 'botaoDesativar':
   $sql = "UPDATE usuarios  SET ativo = '0'  WHERE CPF = '".$cpf."'";
   $flag = 2;//sucesso
-  if(sqlsrv_query( $conn, $sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)){
 
   }else{
     echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
@@ -35,7 +35,7 @@ switch ($botaoClicado) {
   case 'botaoAtivar':
   $sql = "UPDATE usuarios  SET ativo = '1'  WHERE CPF = '".$cpf."'";
   $flag = 4;//sucesso
-  if(sqlsrv_query( $conn, $sql)=== TRUE){
+  if(sqlsrv_query( $conn, $sql)){
 
   }else{
     echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
@@ -49,7 +49,7 @@ switch ($botaoClicado) {
 
   $sql = "INSERT INTO usuarios (cpf, nome, email, idTipo, usuario,  Senha,ativo,primeiroAcesso) VALUES('$cpf', '$nome', '$email', '$tipo', '$usuario', '$sTemp',1,1) " ;
   $flag = 5;//sucesso
-  if(sqlsrv_query( $conn, $sql)=== TRUE){ 
+  if(sqlsrv_query( $conn, $sql)){ 
   // Envia o e-mail para o usuário
   //'$usuario
     $to  = $email;
@@ -67,7 +67,6 @@ switch ($botaoClicado) {
       <p>Sua senha é composta pelos <b>seis primeiros dígitos do seu CPF</b></p>       
       <p>Por gentileza faça o primeiro acesso clicando no link abaixo para trocar a sua senha e obter acesso ao portal.</p>
     	<a HREF="http://localhost:8080/portal/index.php" TARGET="_blank"> Clique aqui para redefinir sua senha</a>
-
     </body>
     </html>
     ';

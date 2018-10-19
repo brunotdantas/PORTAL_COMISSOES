@@ -6,9 +6,7 @@
  * TODO: o que temos que fazer ainda
  * ! isso é um aviso importante 
  * ? Isso é uma dúvida ou uma indicação de query 
- * 
- * 
- */
+ */ 
 //// Isso é um comentário riscado
 
 // Busca Numero de lojas 
@@ -27,9 +25,6 @@ $resultado = sqlsrv_query( $conn, $sql);
   while($dados=sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
     $nVendedores= $dados["nVend"];
   }
-
-
-
 
 ?>
 
@@ -95,8 +90,6 @@ $resultado = sqlsrv_query( $conn, $sql);
     ?>
 
       </div>
-
-
 
     </section>     <!-- /.content -->
   </div>   <!-- /.content-wrapper -->

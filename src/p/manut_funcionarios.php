@@ -66,7 +66,7 @@
                     // Le quantas lojas existem
                     $contador = 0;
 
-                    $sql = "SELECT CPF,Nome,idCargo, idVendedor FROM `vendedores`";
+                    $sql = "SELECT CPF,Nome,idCargo, idVendedor FROM vendedores";
 
                     $resultado = sqlsrv_query( $conn, $sql);
 
@@ -89,7 +89,7 @@
                             </td>
                             <input type="hidden" name="idVendedor'.$contador.'" value="'.$idVendedor.'">
                           </tr>
-                          ';
+                          '; // TODO: Não fazer if else nessa tela
                       }
                     }
                   ?>
