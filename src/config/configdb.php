@@ -1,7 +1,7 @@
 <?php
 $config = 1 ;
 
-echo "teste";
+echo "teste1";
 
 if (config == 0){
     define('DB_SERVER', '.\SQLEXPRESS');//'HEL001259\SQLEXPRESS');  
