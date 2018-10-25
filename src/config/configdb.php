@@ -1,6 +1,8 @@
 <?php
 $config = 1 ;
 
+echo "teste";
+
 if (config == 0){
     define('DB_SERVER', '.\SQLEXPRESS');//'HEL001259\SQLEXPRESS');  
     define('DB_USERNAME', 'php');
@@ -44,8 +46,6 @@ else {
     echo ($row['CategoryName'] . " " . $row['ProductName'] . PHP_EOL);
     }
     sqlsrv_free_stmt($getResults);
-
-
 
 }    
 
