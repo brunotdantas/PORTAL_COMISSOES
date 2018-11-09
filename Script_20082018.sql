@@ -107,6 +107,7 @@ CREATE TABLE  VendasCabec (
   idVendedor INT NULL,
   ValorTotal VARCHAR(45) NULL,
   idLojas INT NULL,
+  dataVenda datetime,
   PRIMARY KEY (idVenda),
   CONSTRAINT VENDA_FK_lojaPertence
     FOREIGN KEY (idLojas)
@@ -127,8 +128,8 @@ CREATE TABLE  Metas (
   idMetas INT NOT NULL IDENTITY(1,1),
   idLojas INT NULL,
   valorMeta DECIMAL NULL,
-  periodoDE datetime not NULL,
-  periodoATE datetime not NULL,
+  mes varchar(2) not NULL,
+  ano varchar(4) not NULL,
   PRIMARY KEY (idMetas),
   CONSTRAINT lojaPertence
     FOREIGN KEY (idLojas)

@@ -33,7 +33,7 @@
 
         <?php
 
-          // TODO: fazer aqui uma lógica para buscar da tabela de acessos inves d chumbado como consta abaixo 
+          // TODO: fazer aqui uma lógica para buscar da tabela de acessos inves d chumbado como consta abaixo
 
           switch ($_SESSION["cargo"]) {
             case 1:
@@ -42,10 +42,10 @@
 
             case 2:
                 echo '<li class="active"><a href="../p/manut_metas.php"><i class="fa fa-money"></i>Manutenção de metas</a></li>';
-                echo '<li class="active"><a href="../p/manut_metas_NOVO.php"><i class="fa fa-money"></i>NOVO>Manutenção de metas</a></li>';                
+                echo '<li class="active"><a href="../p/importa_metas.php"><i class="fa fa-money"></i>Importação de metas</a></li>';
                 echo '<li class="active"><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';
                 echo '<li class="active"><a href="../p/manut_funcionarios.php"><i class="fa fa-users"></i>Manutenção de funcionários</a></li>';
-  
+
             case 3:
                 echo '<li class="active"><a href="#"><i class="fa fa-money"></i>MENU EM CONSTRUÇÃO</a></li>';
           }
@@ -55,8 +55,8 @@
 
 
 
-        
-        
+
+
         </li>
         <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li><a href="../../index2.html"><i class="fa fa-book"></i> <span>Exemplos</span></a></li>

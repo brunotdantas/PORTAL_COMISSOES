@@ -62,8 +62,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Cadastro de metas
-        <small></small>
+        Manutenção de metas cadastradas
+        <small> Esta rotina tem como principal objetivo realizar a manutenção das metas previamente cadastradas pela
+        rotina de importação de metas</small>
       </h1>
 
     </section>
@@ -93,7 +94,7 @@
                     <br>
                     <label>Informe o Mês desejado:</label>
                     <select class="form-control" name="mesMeta" id="mes" required>
-                    <?php 
+                    <?php
                         $MesDesc = array(
                           '',
                           'JANEIRO',
@@ -107,16 +108,16 @@
                           'SETEMBRO',
                           'OUTUBRO',
                           'NOVEMBRO',
-                          'DEZEMBRO'    
+                          'DEZEMBRO'
                       );
-                      
+
                       $months = range(date("m"),'12'); // Não é possível lançar meta no mês < atual
                       //var_dump($months);
-                      
+
                       foreach ($months as $mes) {
                         echo "<option value=".sprintf("%02d", $mes).">".$MesDesc[$mes]."</option>";
                       }
-                    
+
                     ?>
                     </select>
 
@@ -126,7 +127,7 @@
                       <option value="0">Meta por loja por ano e por mês</option>
                       <option value="1">Meta fixa por ano</option>
                     </select>
-                      
+
 
                   </div>
                   <div class="box-footer">
@@ -139,7 +140,7 @@
                 <div id="conteudo"> <!-- Aqui fica o conteúdo AJAX --> </div>
 
               </div> <!-- /.box-footer-->
-   
+
     </section>  <!-- /.content -->
 
   </div>
@@ -177,7 +178,7 @@
     * Função para enviar os dados
     */
    function getDados() {
-     
+
        // Declaração de Variáveis
        var valorBusca   = document.getElementById("mes").value+document.getElementById("ano").value;
        var tpMeta = document.getElementById("tpMeta").value;
@@ -190,7 +191,7 @@
 
        // Iniciar uma requisição
        xmlreq.open("GET", "../valForms/AJAX_metas.php?periodo=" + valorBusca + "&tipoMeta="+ tpMeta , true);
- 
+
        // Atribui uma função para ser executada sempre que houver uma mudança de ado
        xmlreq.onreadystatechange = function(){
 
@@ -206,13 +207,13 @@
        };
        xmlreq.send(null);
 
-        $('#mes').attr('readonly', true) 
+        $('#mes').attr('readonly', true)
         $('#mes option:not(:selected)').prop('disabled', true);
 
-        $('#ano').attr('readonly', true) 
+        $('#ano').attr('readonly', true)
         $('#ano option:not(:selected)').prop('disabled', true);
 
-        $('#tpMeta').attr('readonly', true) 
+        $('#tpMeta').attr('readonly', true)
         $('#tpMeta option:not(:selected)').prop('disabled', true);
 
        //$('#botaoPesq').attr('disabled', true)
@@ -242,25 +243,25 @@ $(function() {
               'SETEMBRO',
               'OUTUBRO',
               'NOVEMBRO',
-              'DEZEMBRO'    
+              'DEZEMBRO'
               ];
     var option = ''; // guarda os valores do select html
 
-    $('#ano').change(function(e){    
+    $('#ano').change(function(e){
     var cmbMes = document.getElementById("mes");
     var anoSelecionado = $('#ano').val();
-    var d = new Date();      
+    var d = new Date();
     if (anoSelecionado == (d.getFullYear())){ // Se Ano atual -> começar o mês no atual+1
       for (let index = d.getMonth()+1; index <= 12; index++) {
-        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';        
-      } 
+        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';
+      }
       cmbMes.innerHTML = '<select class="form-control" name="mesMeta" id="mes" required>';
       cmbMes.innerHTML += option;
       cmbMes.innerHTML += '</select>';
       option = '';
     }else{
       for (let index = 1; index <= 12; index++) {
-        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';        
+        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';
       }
       cmbMes.innerHTML = '<select class="form-control" name="mesMeta" id="mes" required>';
       cmbMes.innerHTML += option;
@@ -271,6 +272,6 @@ $(function() {
 });
 
   $(function() {
-    //TODO: Fazer uma função para dar Fade in na msg de inserção/alteração com sucesso 
+    //TODO: Fazer uma função para dar Fade in na msg de inserção/alteração com sucesso
   });
-</script> 
+</script>
