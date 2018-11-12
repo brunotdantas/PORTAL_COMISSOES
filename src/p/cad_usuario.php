@@ -1,5 +1,6 @@
 <?php
 include '../pFixas/cabec.php';
+
 $mensagem = '';
 
 $flag = isset($_GET['flag']) ? $_GET['flag'] : 'z';
@@ -86,6 +87,7 @@ switch ($flag) {
   break;
 }
 ?>
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>Manutenção de Usuários <small>Consultar CPF</small></h1>
@@ -113,8 +115,9 @@ switch ($flag) {
   </section>
 </div>
 
-<?php include '../pFixas/footer.php'; ?>
 <script>
-$('#inputEmail3').mask('000.000.000-00', {reverse: true});
-$('#vlMeta').mask('000.000.000.000.000,00', {reverse: true});
+  $('#inputEmail3').mask('000.000.000-00', {reverse: true});
+  $('#vlMeta').mask('000.000.000.000.000,00', {reverse: true});
 </script>
+
+<?php include '../pFixas/footer.php'; ?>

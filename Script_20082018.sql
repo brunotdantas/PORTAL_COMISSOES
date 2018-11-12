@@ -34,6 +34,21 @@ CREATE TABLE tipo_usuarios (
 
 
 -- -----------------------------------------------------
+-- Table param_portal
+-- -----------------------------------------------------
+IF OBJECT_ID('param_portal', 'U') IS NOT NULL DROP TABLE param_portal
+CREATE TABLE param_portal (
+  idParam INT NOT NULL IDENTITY(1,1),
+  nomeParam			varchar(max),
+  descricaoParam varchar(max),
+  conteudo_campo1 varchar(max),
+  conteudo_campo2 varchar(max),
+  conteudo_campo3 varchar(max),
+  create_time DATETIME NULL DEFAULT GETDATE(),
+  PRIMARY KEY (idParam))
+--  UNIQUE INDEX descricaoTipo_UNIQUE (descricaoTipo ASC));
+
+-- -----------------------------------------------------
 -- Table Usuarios
 -- -----------------------------------------------------
 IF OBJECT_ID('Usuarios', 'U') IS NOT NULL DROP TABLE Usuarios

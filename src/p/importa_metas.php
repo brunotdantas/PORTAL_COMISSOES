@@ -43,13 +43,14 @@
 
     <!-- Main content -->
     <section class="content">
-      <form class="" action="teste.php" method="post" enctype="multipart/form-data">
+      <form class="" action="importa_metas.php" method="post" enctype="multipart/form-data">
       <div class="box box-primary">
                 <div class="box-header">
                   <!--<i class="fa fa-edit"></i>-->
                   <h3 class="box-title">Essa rotina utiliza a importação de um arquivo no
                     formato csv para cadastramento de metas automaticamente seguindo os passos abaixo</h3>
                 <div class="box-body pad table-responsive">
+
 <!--- Conteudo ---->
                 <p><h3>1</h3><h4> Caso ainda não tenha baixado o modelo para preenchimento da meta clique no botão abaixo  </h4></p>
                 <p><input type="button" class="btn btn-primary" onclick="location.href='../download/template.csv';"  value="Baixar arquivo modelo" /> </p>
@@ -64,6 +65,7 @@
                   <!--<p class="help-block">Example block-level help text here.</p>-->
                 </div>
 <!-- /.Conteudo -->
+
                 </div>
                 <!-- /.box -->
                 <div class="box-footer">

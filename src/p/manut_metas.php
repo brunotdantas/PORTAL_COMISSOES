@@ -1,277 +1,202 @@
 <?php
   include '../pFixas/cabec.php';
-  $mensagem = '';
-
-  $flag = isset($_GET['flag']) ? $_GET['flag'] : 'z';
-
-  if ($flag == 1){
-
-    echo '
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    ';
-      $mensagem = '
-      <div class="alert alert-success alert-dismissible" id="msgFeedback">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-check"></i> Alert!</h4>
-        Valores inseridos/atualizados com sucesso!
-      </div>
-      ';
-  }else if ($flag==2) {
-      $mensagem = '
-      <div class="alert alert-danger alert-dismissible" id="msgFeedback">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-        Ocorreu um erro no processo de inserção de registros, por favor contate o administrador do sistema
-        informando essa mensagem
-      </div>
-     ';
-  }
-
-
-
+//--- Modelo principal
 ?>
+  <script>
+  <!-- =============================================== -->
+    // Script para carregar calendário
+  <!-- =============================================== -->
 
-<!-- //- Modelo principal -->
-<!-- =============================================== -->
+  $( function() {
+    $( "#from" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    //$( "#from" ).datepicker( "option", "dateFormat", "yy-mm" );
+    var dateFormat = "dd/mm/yy",
+      from = $( "#from" )
+        .datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 3
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+      return date;
+    }
+  } );
+  </script>
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Manutenção de metas cadastradas
-        <small> Esta rotina tem como principal objetivo realizar a manutenção das metas previamente cadastradas pela
-        rotina de importação de metas</small>
+        <!--Manutenção de metas já inseridas -->
+        <small></small>
       </h1>
-
+<!--      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="#">Examples</a></li>
+        <li class="active">Blank page</li>
+      </ol>
+-->
     </section>
 
     <!-- Main content -->
     <section class="content">
 
-<!--https://jsfiddle.net/JeZap/1560/-->
-      <div class="box box-primary">
-                <div class="box-header">
-                  <!--<i class="fa fa-edit"></i>-->
-                  <h3 class="box-title"></h3>
-                  <?= $mensagem ?>
-                  <div class="form-group">
-                    <label>Informe o Ano desejado:</label>
-                    <select class="form-control" name="anoMeta" id="ano" required>
-                      <?php
-                        $years = range(date("Y"), date("Y")+10);//Ano + 10 anos
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Manutenção de metas já inseridas</h3>
+          <!--
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+          </div>
+        -->
+        </div>
+        <div class="box-body">
 
-                        foreach ($years as $ano) {
-                          echo "<option value=".sprintf("%04d", $ano).">".$ano."</option>";
-                        }
-
-                      ?>
-
-                    </select>
-                    <br>
-                    <label>Informe o Mês desejado:</label>
-                    <select class="form-control" name="mesMeta" id="mes" required>
-                    <?php
-                        $MesDesc = array(
-                          '',
-                          'JANEIRO',
-                          'FEVEREIRO',
-                          'MARÇO',
-                          'ABRIL',
-                          'MAIO',
-                          'JUNHO',
-                          'JULHO',
-                          'AGOSTO',
-                          'SETEMBRO',
-                          'OUTUBRO',
-                          'NOVEMBRO',
-                          'DEZEMBRO'
-                      );
-
-                      $months = range(date("m"),'12'); // Não é possível lançar meta no mês < atual
-                      //var_dump($months);
-
-                      foreach ($months as $mes) {
-                        echo "<option value=".sprintf("%02d", $mes).">".$MesDesc[$mes]."</option>";
-                      }
-
-                    ?>
-                    </select>
-
-                    <br>
-                    <label>Informe o tipo de meta que deseja cadastrar:</label>
-                    <select class="form-control" name="tipoMeta" id="tpMeta" required>
-                      <option value="0">Meta por loja por ano e por mês</option>
-                      <option value="1">Meta fixa por ano</option>
-                    </select>
+        <form action="validaTeste.php" method = "GET">
+          <div class="form-group">
 
 
-                  </div>
-                  <div class="box-footer">
+          </div>
 
-                    <button id="botaoPesq" class="btn btn-info pull-right" onclick="getDados();">Pesquisar</button>
-                    <button id="botaoNVbusca" class="btn btn-success pull-right" onclick="location.reload();">Fazer uma nova busca</button>
+          <div class="form-group">
+                <p><h4> Clique no campo abaixo para selecionar um período para buscar as metas  </h4></p>
+                  <input type="text" name="daterange" />
+          </div>
+          <button type="submit" class="btn btn-info pull-left">Carregar dados</button>
 
-                  </div>
-                </div>
-                <div id="conteudo"> <!-- Aqui fica o conteúdo AJAX --> </div>
+        </form>
 
-              </div> <!-- /.box-footer-->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          Footer
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
 
-    </section>  <!-- /.content -->
-
+    </section>
+    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
- <!-- Código para buscar CPF -->
- <script>
-  /**
-    * Função para criar um objeto XMLHTTPRequest
-    */
-   function CriaRequest() {
-       try{
-           request = new XMLHttpRequest();
-       }catch (IEAtual){
-
-           try{
-               request = new ActiveXObject("Msxml2.XMLHTTP");
-           }catch(IEAntigo){
-
-               try{
-                   request = new ActiveXObject("Microsoft.XMLHTTP");
-               }catch(falha){
-                   request = false;
-               }
-           }
-       }
-
-       if (!request)
-           alert("Seu Navegador não suporta Ajax!");
-       else
-           return request;
-   }
-
+  <script>
    /**
-    * Função para enviar os dados
-    */
-   function getDados() {
+     * Função para criar um objeto XMLHTTPRequest
+     */
+    function CriaRequest() {
+        try{
+            request = new XMLHttpRequest();
+        }catch (IEAtual){
 
-       // Declaração de Variáveis
-       var valorBusca   = document.getElementById("mes").value+document.getElementById("ano").value;
-       var tpMeta = document.getElementById("tpMeta").value;
+            try{
+                request = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch(IEAntigo){
 
-       var result = document.getElementById("conteudo");
-       var xmlreq = CriaRequest();
+                try{
+                    request = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch(falha){
+                    request = false;
+                }
+            }
+        }
 
-       // Exibi a imagem de progresso
-       result.innerHTML = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i> </div>';
+        if (!request)
+            alert("Seu Navegador não suporta Ajax!");
+        else
+            return request;
+    }
 
-       // Iniciar uma requisição
-       xmlreq.open("GET", "../valForms/AJAX_metas.php?periodo=" + valorBusca + "&tipoMeta="+ tpMeta , true);
+    /**
+     * Função para enviar os dados
+     */
+    function getDados() {
 
-       // Atribui uma função para ser executada sempre que houver uma mudança de ado
-       xmlreq.onreadystatechange = function(){
+        // Declaração de Variáveis
+        var valorBusca   = document.getElementById("mes").value+document.getElementById("ano").value;
+        var tpMeta = document.getElementById("tpMeta").value;
 
-           // Verifica se foi concluído com sucesso e a conexão fechada (readyState=4)
-           if (xmlreq.readyState == 4) {
-               // Verifica se o arquivo foi encontrado com sucesso
-               if (xmlreq.status == 200) {
-                   result.innerHTML = xmlreq.responseText;
-               }else{
-                   result.innerHTML = "Erro: " + xmlreq.statusText;
-               }
-           }
-       };
-       xmlreq.send(null);
+        var result = document.getElementById("conteudo");
+        var xmlreq = CriaRequest();
 
-        $('#mes').attr('readonly', true)
-        $('#mes option:not(:selected)').prop('disabled', true);
+        // Exibi a imagem de progresso
+        result.innerHTML = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i> </div>';
 
-        $('#ano').attr('readonly', true)
-        $('#ano option:not(:selected)').prop('disabled', true);
+        // Iniciar uma requisição
+        xmlreq.open("GET", "../valForms/AJAX_busca_metas.php?periodoDE=" + valorBusca + "&periodoATE="+ tpMeta , true);
 
-        $('#tpMeta').attr('readonly', true)
-        $('#tpMeta option:not(:selected)').prop('disabled', true);
+        // Atribui uma função para ser executada sempre que houver uma mudança de ado
+        xmlreq.onreadystatechange = function(){
 
-       //$('#botaoPesq').attr('disabled', true)
+            // Verifica se foi concluído com sucesso e a conexão fechada (readyState=4)
+            if (xmlreq.readyState == 4) {
+                // Verifica se o arquivo foi encontrado com sucesso
+                if (xmlreq.status == 200) {
+                    result.innerHTML = xmlreq.responseText;
+                }else{
+                    result.innerHTML = "Erro: " + xmlreq.statusText;
+                }
+            }
+        };
+        xmlreq.send(null);
 
-        $('#botaoPesq').hide();
-        $('#botaoNVbusca').show();
-   }
-  </script>
+         $('#mes').attr('readonly', true)
+         $('#mes option:not(:selected)').prop('disabled', true);
+
+         $('#ano').attr('readonly', true)
+         $('#ano option:not(:selected)').prop('disabled', true);
+
+         $('#tpMeta').attr('readonly', true)
+         $('#tpMeta option:not(:selected)').prop('disabled', true);
+
+        //$('#botaoPesq').attr('disabled', true)
+
+         $('#botaoPesq').hide();
+         $('#botaoNVbusca').show();
+    }
+   </script>
+
+   <script>
+   $(function() {
+     var start = moment();
+     var end = moment().add(1, 'month'); ;
+
+     $('input[name="daterange"]').daterangepicker({
+       opens: 'right',
+       startDate: start,
+       endDate: end,
+       locale: {
+          format: 'DD/MM/YYYY'
+       }
+     }, function(start, end, label) {
+       console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+     });
+   });
+   </script>
 
 <?php include '../pFixas/footer.php'; ?>
-<script>
-$(function() {
-
-    $('#botaoNVbusca').hide();
-
-  // Função é executada assim que a página fica pronta
-    var $MesDesc = [
-              '',
-              'JANEIRO',
-              'FEVEREIRO',
-              'MARÇO',
-              'ABRIL',
-              'MAIO',
-              'JUNHO',
-              'JULHO',
-              'AGOSTO',
-              'SETEMBRO',
-              'OUTUBRO',
-              'NOVEMBRO',
-              'DEZEMBRO'
-              ];
-    var option = ''; // guarda os valores do select html
-
-    $('#ano').change(function(e){
-    var cmbMes = document.getElementById("mes");
-    var anoSelecionado = $('#ano').val();
-    var d = new Date();
-    if (anoSelecionado == (d.getFullYear())){ // Se Ano atual -> começar o mês no atual+1
-      for (let index = d.getMonth()+1; index <= 12; index++) {
-        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';
-      }
-      cmbMes.innerHTML = '<select class="form-control" name="mesMeta" id="mes" required>';
-      cmbMes.innerHTML += option;
-      cmbMes.innerHTML += '</select>';
-      option = '';
-    }else{
-      for (let index = 1; index <= 12; index++) {
-        option += '<option value="'+("0" + index).slice(-2)+'">'+$MesDesc[index]+'</option>';
-      }
-      cmbMes.innerHTML = '<select class="form-control" name="mesMeta" id="mes" required>';
-      cmbMes.innerHTML += option;
-      cmbMes.innerHTML += '</select>';
-      option = '';
-    }
-  })
-});
-
-  $(function() {
-    //TODO: Fazer uma função para dar Fade in na msg de inserção/alteração com sucesso
-  });
-</script>

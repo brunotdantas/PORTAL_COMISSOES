@@ -49,7 +49,7 @@ switch ($botaoClicado) {
 
   $sql = "INSERT INTO usuarios (cpf, nome, email, idTipo, usuario,  Senha,ativo,primeiroAcesso) VALUES('$cpf', '$nome', '$email', '$tipo', '$usuario', '$sTemp',1,1) " ;
   $flag = 5;//sucesso
-  if(sqlsrv_query( $conn, $sql)){ 
+  if(sqlsrv_query( $conn, $sql)){
   // Envia o e-mail para o usuário
   //'$usuario
     $to  = $email;
@@ -62,9 +62,9 @@ switch ($botaoClicado) {
     </head>
     <body>
       <p><h3>Seu primeiro acesso</h3></p>
-      <p>Caro(a) usuário(a) <b>'.$nome.'</b>, o Administrador do sistema criou o seu login no portal de vendas de comissões. 
-      <p>Seu login para acesso é: <b>'.$usuario.'</b></p> 
-      <p>Sua senha é composta pelos <b>seis primeiros dígitos do seu CPF</b></p>       
+      <p>Caro(a) usuário(a) <b>'.$nome.'</b>, o Administrador do sistema criou o seu login no portal de vendas de comissões.
+      <p>Seu login para acesso é: <b>'.$usuario.'</b></p>
+      <p>Sua senha é composta pelos <b>seis primeiros dígitos do seu CPF</b></p>
       <p>Por gentileza faça o primeiro acesso clicando no link abaixo para trocar a sua senha e obter acesso ao portal.</p>
     	<a HREF="http://localhost:8080/portal/index.php" TARGET="_blank"> Clique aqui para redefinir sua senha</a>
     </body>
@@ -73,7 +73,8 @@ switch ($botaoClicado) {
     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset="UTF-8' . "\r\n";
     $headers .= 'From: Cadastrar nova senha <birthday@example.com>' . "\r\n";
-    mail($to, $subject, $message, $headers); 
+    mail_utf8($to, 'novoCadastro@portalcomissoes.com' ,$subject, $message);
+
   }else{
     echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
     $flag = 6; // erro

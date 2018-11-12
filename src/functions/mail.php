@@ -1,11 +1,30 @@
 
 <?php
 
-function mail_utf8($to, $from_user, $from_email,$subject = '(No subject)', $message = ''){
+
+  $sql = " select * from param_portal where nomeParam = 'api_key_email'  ";
+
+  $resultado = sqlsrv_query( $conn, $sql);
+
+  if(sqlsrv_has_rows($resultado)){
+    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+
+     $email_usuario = $row["conteudo_campo1"];
+     $email_senha = $row["conteudo_campo2"];
+     $apiKey = $row["conteudo_campo3"];
+
+   }
+  }
+
+  define('KEY_API_EMAIL', $apiKey);
+  define('USUARIO_API_EMAIL', $email_usuario);
+  define('SENHA_API_EMAIL', $email_senha);
+
+function mail_utf8($to, $from_email,$subject = '(No subject)', $message = ''){
 
    $url = 'https://api.sendgrid.com/';
-   $user = 'azure_f6c25ca15608caf53ad7245c49eaed74@azure.com';
-   $pass = 'admin@123';
+   $user = USUARIO_API_EMAIL;//'azure_f6c25ca15608caf53ad7245c49eaed74@azure.com';
+   $pass = SENHA_API_EMAIL;
 
    $params = array(
         'api_user' => $user,
@@ -14,7 +33,7 @@ function mail_utf8($to, $from_user, $from_email,$subject = '(No subject)', $mess
         'subject' => $subject,
         'html' => $message,
         'text' =>  $message,
-        'from' => $from_user,
+        'from' => $from_email,
      );
 
    $request = $url.'api/mail.send.json';
@@ -39,7 +58,7 @@ function mail_utf8($to, $from_user, $from_email,$subject = '(No subject)', $mess
    // print everything out
    print_r($response);
 
-   return
+
   }
 
 ?>

@@ -12,9 +12,9 @@ session_start();
         if($_SESSION['primeiroLogin']==1){
           // O usuário está acessando pela primeira vez
           header("location: logout.php");
-          exit();             
+          exit();
         }
-      }      
+      }
 
 
 ?>
@@ -31,7 +31,6 @@ session_start();
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Data Toggle 2.2.2 -->
   <link rel="stylesheet" href="../../bower_components/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" >
- 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -58,8 +57,7 @@ session_start();
   <title>AdminLTE 2 | Advanced form elements</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -83,24 +81,25 @@ session_start();
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
 
 
-<!-- jQuery 3 -->
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/jquery/dist/jquery.mask.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
-<!-- DataToggle -->
-<script src="../../bower_components/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
+
+
+  <!-- jQuery 3 -->
+  <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+
+  <!-- DataTables -->
+  <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- DataToggle -->
+  <script src="../../bower_components/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+
 <script>
  $(document).ready(function () {
    $('.sidebar-menu').tree()
