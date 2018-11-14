@@ -43,7 +43,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <form class="" action="importa_metas.php" method="post" enctype="multipart/form-data">
+      <form id="formulario" action="../valForms/processa_metas.php" method="post" enctype="multipart/form-data">
       <div class="box box-primary">
                 <div class="box-header">
                   <!--<i class="fa fa-edit"></i>-->
@@ -61,7 +61,8 @@
                 <p><h3>3</h3><h4> Clique no botão abaixo e selecione o arquivo que você acabou de criar e clique em 'OK' </h4></p>
                 <div class="form-group">
                   <!--<label for="exampleInputFile">File input</label> -->
-                  <input type="file" name="fileToUpload" id="fileToUpload" require>
+                  <input type="file" name="fileToUpload" id="fileToUpload" id="importacao">
+                  <span id="arquivoUpload"></span>
                   <!--<p class="help-block">Example block-level help text here.</p>-->
                 </div>
 <!-- /.Conteudo -->
@@ -80,7 +81,25 @@
 
 <script>
 $(document).ready(function() {
+
+  $( "#formulario" ).submit(function( event ) {
+
+      if ( $( "#fileToUpload" ).val() != "" ) {
+        //$( "span" ).text( "Validated..." ).show();
+        return;
+      }
+
+      var texto = ' <p class="text-danger">Por favor selecione um arquivo antes de enviar </p>';
+
+      $( "#arquivoUpload" ).html( texto ).show().fadeOut( 3000 );
+      event.preventDefault();
+
+  });
+
 });
+
+
+
 </script>
 
 <?php include '../pFixas/footer.php'; ?>

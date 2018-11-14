@@ -4,20 +4,20 @@
 
   $retorno = "";
 
-  // Le quantas lojas existem
-  $contador = 0;
-  $loja = $_GET['loja'];
+  $periodo = explode($_GET['periodo']);
 
-  $loja .= "oi";
+  $periodoDE = $periodo[0];
+  $periodoATE = $periodo[1];
+  echo $periodoDE;
+  echo '<br>';
+  echo $periodoATE;
 
-  $retorno = $loja;
- 
-  echo $retorno;
 /*
-
   switch ($tpMeta) {
     case 0:
-    
+
+      $sql = " select idLojas,valorMeta into #table2 from metas where periodo = '$periodo';";
+
       // TODO esse resultado traz branco
       $resultado = sqlsrv_query( $conn, $sql);
 
@@ -25,7 +25,7 @@
 
         $retorno .= '<form class="" action="../valForms/validaMeta.php" method="post">';
 
-        $retorno .= '<div><button type="submit" class="btn btn-info btn-block">Salvar</button></div>';   
+        $retorno .= '<div><button type="submit" class="btn btn-info btn-block">Salvar</button></div>';
 
         $retorno .= '<div class="box-body pad table-responsive">
           <!-- Calendário: http://jsfiddle.net/DBpJe/15060/ -->
@@ -61,15 +61,15 @@
               </tr>
             ';
         }
-      
+
       }else{
         die( print_r( sqlsrv_errors(), true));
       }
 
       $retorno .= ' <input type="hidden" name="numMetas" value="'.$contador.'"></tbody></table>';
-      $retorno .= ' <input type="hidden" name="periodo" value="'.$periodo.'">';   
-      $retorno .= '<div><button type="submit" class="btn btn-info btn-block">Salvar</button></div>';  
-      $retorno .= ' </form></div><!-- /.box -->'; 
+      $retorno .= ' <input type="hidden" name="periodo" value="'.$periodo.'">';
+      $retorno .= '<div><button type="submit" class="btn btn-info btn-block">Salvar</button></div>';
+      $retorno .= ' </form></div><!-- /.box -->';
 
       break;
     case 1:

@@ -2,30 +2,98 @@
 
   include '../config/configdb.php';
 
+  echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>';
+
+  $contador = 0;
   $retorno = "";
 
-  $periodo = $_GET['periodo'];
-  $tpMeta = $_GET['tipoMeta'];
+  $periodo = explode('-',$_GET['periodo']);
 
+  $periodoDE = date('Ymd',strtotime(str_replace('/','-',$periodo[0])));
+  $periodoATE = date('Ymd',strtotime(str_replace('/','-',$periodo[1])));
+
+//  echo date('Ymd',strtotime($periodoDE));
+//  echo '<br>';
+//  echo date('Ymd',strtotime($periodoATE));
+
+  $periodoDE = substr($periodoDE,0,6) ;
+
+  $periodoATE =  substr($periodoATE,0,6);
+
+  $sql = " SELECT * FROM METAS where ano+mes between '$periodoDE' and '$periodoATE' ";
+
+  // TODO esse resultado traz branco
+  $resultado = sqlsrv_query( $conn, $sql);
+
+  if(sqlsrv_has_rows($resultado)){
+    $retorno .= '<form class="" action="../valForms/validaMeta.php" method="post">';
+
+    $retorno .= '<div class="box-body pad table-responsive">
+      <table class="table table-bordered text-center">
+        <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Loja</th>
+          <th>Mes Meta</th>
+          <th>Ano Meta</th>
+          <th>Valor Meta</th>
+        </tr>';
+
+    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+        $contador++;
+        $IdMeta     = $row["idMetas"];
+        $idlojas    = $row["idLojas"];
+        $valorMeta  = $row["valorMeta"];
+        $mesMeta    = $row["mes"];
+        $anoMeta    = $row["ano"];
+
+        $retorno .='
+          <tr>
+            <td>
+              <input class="form-control"  type="text" name="idMeta[]" value="'.$IdMeta.'" readonly>
+            </td>
+            <td>
+              <input class="form-control"  type="text" name="idloja[]" value="'.$idlojas.'" readonly>
+            </td>
+            <td>
+              <input class="form-control"  type="text" name="mes[]" value="'.$mesMeta.'" readonly>
+            </td>
+            <td>
+              <input class="form-control"  type="text" name="ano[]" value="'.$anoMeta.'" readonly>
+            </td>
+            <td>
+              <div class="input-group input-group-md">
+              <span class="input-group-addon">R$</span>
+                <input class="form-control" name="valorMeta[]" type="number" min="0.01" step="0.01" value="'.$valorMeta.'" />
+            </td>
+          </tr>
+        ';
+    }
+    $retorno .= '</table><hr>';
+    $retorno .= '<button type="submit" class="btn btn-success btn-block">Salvar</button>';
+    $retorno .= '</form>';
+
+  }else{
+    $retorno .= '
+    <div class="alert alert-warning" role="alert">
+      <strong>Não existem dados para o período selecionado.</strong>
+    </div>
+    ';
+
+  }
+
+
+echo $retorno;
+
+// ================================
+
+// parei aqui
+
+/*
   switch ($tpMeta) {
     case 0:
-/*
-//      $sql = " select idLojas,valorMeta into table2 from metas where periodo = '$periodo';";
- //     $resultado = sqlsrv_query( $conn, $sql);
-
-      $sql = "
-              select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
-              left join Metas m on l.idLojas = m.idLojas
-      			  where m.periodo = '$periodo'
-              ";
-*/
-
 
       $sql = " select idLojas,valorMeta into #table2 from metas where periodo = '$periodo';";
-//      $resultado = sqlsrv_query( $conn, $sql);
-
-      $sql .= " select l.idLojas,l.NomeLoja,m.valorMeta from lojas l
-              left join #table2 m on l.idLojas = m.idLojas;";
 
       // TODO esse resultado traz branco
       $resultado = sqlsrv_query( $conn, $sql);
@@ -102,5 +170,5 @@
   }
 
   echo $retorno;
-
+*/
 ?>

@@ -77,7 +77,7 @@
         </div>
         <div class="box-body">
 
-        <form action="validaTeste.php" method = "GET">
+        <div> <!--action="validaTeste.php" method = "GET">-->
           <div class="form-group">
 
 
@@ -85,17 +85,21 @@
 
           <div class="form-group">
                 <p><h4> Clique no campo abaixo para selecionar um período para buscar as metas  </h4></p>
-                  <input type="text" name="daterange" />
+                  <input type="text" name="daterange" id="date-range" />
           </div>
-          <button type="submit" class="btn btn-info pull-left">Carregar dados</button>
+          <button  class="btn btn-info pull-left" onclick="getDados();">Carregar dados</button>
 
-        </form>
+        </div>
 
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
+          <div id="conteudo"> <!-- Aqui fica o conteúdo AJAX --> </div>
+
         </div>
+
+
+
         <!-- /.box-footer-->
       </div>
       <!-- /.box -->
@@ -138,8 +142,7 @@
     function getDados() {
 
         // Declaração de Variáveis
-        var valorBusca   = document.getElementById("mes").value+document.getElementById("ano").value;
-        var tpMeta = document.getElementById("tpMeta").value;
+        var periodo = document.getElementById("date-range").value;
 
         var result = document.getElementById("conteudo");
         var xmlreq = CriaRequest();
@@ -148,7 +151,7 @@
         result.innerHTML = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i> </div>';
 
         // Iniciar uma requisição
-        xmlreq.open("GET", "../valForms/AJAX_busca_metas.php?periodoDE=" + valorBusca + "&periodoATE="+ tpMeta , true);
+        xmlreq.open("GET", "../valForms/AJAX_busca_metas.php?periodo="+ periodo , true);
 
         // Atribui uma função para ser executada sempre que houver uma mudança de ado
         xmlreq.onreadystatechange = function(){
@@ -165,19 +168,20 @@
         };
         xmlreq.send(null);
 
-         $('#mes').attr('readonly', true)
-         $('#mes option:not(:selected)').prop('disabled', true);
+  //       $('#mes').attr('readonly', true)
+  //       $('#mes option:not(:selected)').prop('disabled', true);
 
-         $('#ano').attr('readonly', true)
-         $('#ano option:not(:selected)').prop('disabled', true);
+  //       $('#ano').attr('readonly', true)
+  //       $('#ano option:not(:selected)').prop('disabled', true);
 
-         $('#tpMeta').attr('readonly', true)
-         $('#tpMeta option:not(:selected)').prop('disabled', true);
+  //       $('#tpMeta').attr('readonly', true)
+  //       $('#tpMeta option:not(:selected)').prop('disabled', true);
 
-        //$('#botaoPesq').attr('disabled', true)
+  //      //$('#botaoPesq').attr('disabled', true)
 
-         $('#botaoPesq').hide();
-         $('#botaoNVbusca').show();
+  //       $('#botaoPesq').hide();
+  //       $('#botaoNVbusca').show();
+
     }
    </script>
 
