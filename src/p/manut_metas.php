@@ -1,6 +1,31 @@
 <?php
   include '../pFixas/cabec.php';
 //--- Modelo principal
+
+
+$mensagem = '';
+
+$flag = isset($_GET['flag']) ? $_GET['flag'] : 'z';
+
+if ($flag == 1){
+    $mensagem = '
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-check"></i> Alert!</h4>
+      Valores atualizados com sucesso!
+    </div>
+    ';
+}else if ($flag==2) {
+    $mensagem = '
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+      Ocorreu um erro no processo de inserção de registros, por favor contate o administrador do sistema
+      informando essa mensagem
+    </div>
+   ';
+}
+
 ?>
   <script>
   <!-- =============================================== -->
@@ -46,6 +71,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+        <?= $mensagem ?>
       <h1>
         <!--Manutenção de metas já inseridas -->
         <small></small>
@@ -167,20 +193,6 @@
             }
         };
         xmlreq.send(null);
-
-  //       $('#mes').attr('readonly', true)
-  //       $('#mes option:not(:selected)').prop('disabled', true);
-
-  //       $('#ano').attr('readonly', true)
-  //       $('#ano option:not(:selected)').prop('disabled', true);
-
-  //       $('#tpMeta').attr('readonly', true)
-  //       $('#tpMeta option:not(:selected)').prop('disabled', true);
-
-  //      //$('#botaoPesq').attr('disabled', true)
-
-  //       $('#botaoPesq').hide();
-  //       $('#botaoNVbusca').show();
 
     }
    </script>

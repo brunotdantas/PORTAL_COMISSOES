@@ -1,58 +1,45 @@
 <?php
-include '../config/configdb.php';
-include '../functions/strings.php';
+  include '../config/configdb.php';
+  include '../functions/strings.php';
+  $flag = 2; // erro
 
-//print_r($_POST);
-/*
-foreach ($_POST as $key => $value) {
-     echo $key.'=>'.$value.'<br>';
-}
-*/
+    $idMetas = $_POST['idMeta'];
+    $idLojas = $_POST['idloja'];
+    $meses = $_POST['mes'];
+    $anos = $_POST['ano'];
+    $valorMeta = $_POST['valorMeta'];
 
-if(isset($_POST['vlMetaAnual'])){
-/**
- * TODO: Fazer aqui uma lógica exclusiva para metas anuais. 
- * TODO: Uma Ideia talvez seja criar uma tabela temporária das lojas existentes, fazer um looping por ela e 
- * TODO: dar um replace into nos meses, fazer o looping de 12 em cada uma, ou talvez pensar numa lógica melhor
- * 
- */
+    $i = 0;
+    foreach ($idMetas as $v1) {
+      // Tenta fazer o update dos registros
+      try {
+          $query = "  UPDATE  Metas
+                      set     valorMeta = '$valorMeta[$i]'
+                      WHERE   idMetas = '$idMetas[$i]'
+                  ";
+          echo $query.'<br>';
+          $result = sqlsrv_query($conn,$query);
+          if( $result === false ) {
+              //TODO Controlar o erro para retornar ao usuário die( var_dump( sqlsrv_errors(), true));
+              // --> Erro na query
+              $err = 0;
+              echo "Um erro ocorreu---->>>>  Error: ". $query . "<br>".print_r( sqlsrv_errors(), true );
+            }else {
+              $flag = 1;//sucesso!
+            }
+      } catch (Exception $e) {}
 
-  $meta = $_POST['vlMetaAnual'];
-  $ano = right(TRIM($_POST['periodo']),4);
-
-  // Cria uma tabela com as lojas existentes
-  $sql  = "CREATE TEMPORARY TABLE IF NOT EXISTS ListaLojas AS (SELECT idLojas FROM lojas);";
-  sqlsrv_query( $conn, $sql) ;
-
-  $sql  = "select * from ListaLojas";
-  $resultado = sqlsrv_query( $conn, $sql);
-
-  if(sqlsrv_has_rows($resultado)){
-
-    $retorno = '';
-    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
-      $idloja = $row["idLojas"];
-
-      for ($i=1; $i <= 12 ; $i++) {  // Looping de lojas
-        $sql  = "REPLACE INTO metas(idLojas, periodo, valorMeta) ";
-        $sql .= "VALUES ($idloja,'".sprintf("%02d", $i).$ano."',$meta)";
-    
-        $flag = 1;//sucesso
-        if(sqlsrv_query( $conn, $sql)){
-         /// echo "<HR>"."Registros inseridos/atualizados com sucesso";
-        }else{
-          echo "Um erro ocorreu---->>>>  Error: ". $sql . "<br>".print_r( sqlsrv_errors(), true );
-          $flag = 2; // erro
-        }
-      }
+      $i++;
     }
+    ////executing a database query will save "" in field tblAddressBook.addr2
+    //$sql = "update Metas set name=(?), addr1=(?), addr2=(?),..."
+    //$params = array($name, $address_line_1, $address_line_2, ...)
+    //$sql_srv_query($db_conn, $sql, $params);
 
-  }
-}else {
+    //echo "User Has submitted the form and entered this name : <b> $name </b>";
+    //echo "<br>You can use the following form again to enter a new name.";
 
-  $periodo = $_POST['periodo'];
-  $numMetas = $_POST['numMetas'];
-
+/*
   for ($i=1; $i <=$numMetas ; $i++) {
     if (!empty($_POST["Meta$i"])){
         $loja = $_POST["codigo$i"];
@@ -71,7 +58,6 @@ if(isset($_POST['vlMetaAnual'])){
     }
 
   }
-}
-
+*/
 header("location: ../p/manut_metas.php?flag=$flag");
 ?>
