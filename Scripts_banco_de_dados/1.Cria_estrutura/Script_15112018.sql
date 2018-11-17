@@ -34,6 +34,21 @@ CREATE TABLE tipo_usuarios (
 
 
 -- -----------------------------------------------------
+-- Table param_portal
+-- -----------------------------------------------------
+IF OBJECT_ID('param_portal', 'U') IS NOT NULL DROP TABLE param_portal
+CREATE TABLE param_portal (
+  idParam INT NOT NULL IDENTITY(1,1),
+  nomeParam			varchar(max),
+  descricaoParam varchar(max),
+  conteudo_campo1 varchar(max),
+  conteudo_campo2 varchar(max),
+  conteudo_campo3 varchar(max),
+  create_time DATETIME NULL DEFAULT GETDATE(),
+  PRIMARY KEY (idParam))
+--  UNIQUE INDEX descricaoTipo_UNIQUE (descricaoTipo ASC));
+
+-- -----------------------------------------------------
 -- Table Usuarios
 -- -----------------------------------------------------
 IF OBJECT_ID('Usuarios', 'U') IS NOT NULL DROP TABLE Usuarios
@@ -126,16 +141,17 @@ CREATE TABLE  VendasCabec (
 IF OBJECT_ID('Metas', 'U') IS NOT NULL DROP TABLE Metas
 CREATE TABLE  Metas (
   idMetas INT NOT NULL IDENTITY(1,1),
-  idLojas INT NULL,
+  idLojas INT NOT NULL,
   valorMeta DECIMAL NULL,
-  mes datetime not NULL,
-  ano datetime not NULL,
-  PRIMARY KEY (idMetas),
+  mes varchar(2) not NULL,
+  ano varchar(4) not NULL,
+  PRIMARY KEY (idLojas,mes,ano),
   CONSTRAINT lojaPertence
     FOREIGN KEY (idLojas)
     REFERENCES Lojas (idLojas)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+
 
 -- -----------------------------------------------------
 -- Table fatores
@@ -143,16 +159,24 @@ CREATE TABLE  Metas (
 IF OBJECT_ID('fatores', 'U') IS NOT NULL DROP TABLE fatores
 CREATE TABLE  fatores (
   idFator INT NOT NULL IDENTITY(1,1),
-  descricaoFator VARCHAR(45) NOT NULL,
-  vlPorcentagem INT NULL,
-  vlReais DECIMAL(19, 4) NULL,
+  descricaoFator VARCHAR(255) NOT NULL,
+  vlPorcentagem DECIMAL(19, 4) NULL,
+  vlReais money NULL,
   ativo INT NULL,
+  idCargo int FOREIGN KEY REFERENCES Cargo_Lojas(idCargo),
+  calcula_em_cima_do_total int not null,
   create_time DATETIME NULL DEFAULT GETDATE(),
   update_time DATETIME NULL ,
-  idCargo int FOREIGN KEY REFERENCES Cargo_Lojas(idCargo)
+
+   CONSTRAINT fatores_constraint  UNIQUE
+	(
+		idCargo ,
+		vlPorcentagem,
+		vlReais,
+		ativo,
+		calcula_em_cima_do_total
+	)
   )
-
-
 
 -- -----------------------------------------------------
 -- Table param_usuarios
@@ -174,6 +198,25 @@ CREATE TABLE  lista_acessos (
   create_time DATETIME NULL DEFAULT GETDATE(),
   update_time DATETIME NULL )
 go 
+
+-- -----------------------------------------------------
+-- Table comissoes_calculadas
+-- -----------------------------------------------------
+IF OBJECT_ID('comissoes_calculadas', 'U') IS NOT NULL DROP TABLE comissoes_calculadas
+CREATE TABLE comissoes_calculadas (
+  idComissao INT NOT NULL IDENTITY(1,1),
+  idVendedor int FOREIGN KEY REFERENCES vendedores (idVendedor),
+  valor_a_pagar money NOT NULL ,
+  periodo varchar(6) NOT NULL,
+  create_time DATETIME NULL DEFAULT GETDATE()
+
+--  UNIQUE INDEX descricaoTipo_UNIQUE (descricaoTipo ASC));
+	 CONSTRAINT comissoes_constraint PRIMARY KEY CLUSTERED 
+	(
+		idVendedor ASC,
+		periodo ASC
+	)
+)
 
 -- -----------------------------------------------------
 -- Table Log_erros
