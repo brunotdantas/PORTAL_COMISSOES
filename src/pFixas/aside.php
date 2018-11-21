@@ -44,10 +44,12 @@
                 echo '<li class="active"><a href="../p/manut_metas.php"><i class="fa fa-money"></i>Manutenção de metas</a></li>';
                 echo '<li class="active"><a href="../p/importa_metas.php"><i class="fa fa-money"></i>Importação de metas</a></li>';
                 echo '<li class="active"><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';
-                echo '<li class="active"><a href="../p/manut_funcionarios.php"><i class="fa fa-users"></i>Manutenção de funcionários</a></li>';
+//                echo '<li class="active"><a href="../p/manut_funcionarios.php"><i class="fa fa-users"></i>Manutenção de funcionários</a></li>';
+                echo '<li class="active"><a href="../p/Calcular_comissao.php"><i class="fa fa-dollar"></i>Calcular comissão</a></li>';
+
 
             case 3:
-                echo '<li class="active"><a href="#"><i class="fa fa-money"></i>MENU EM CONSTRUÇÃO</a></li>';
+                echo '<li class="active"><a href="../p/Comissoes_calculadas.php"><i class="fa fa-money"></i>Comissões já calculadas</a></li>';
           }
 
         ?>

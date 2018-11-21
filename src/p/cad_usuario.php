@@ -115,9 +115,10 @@ switch ($flag) {
   </section>
 </div>
 
+
+
+<?php include '../pFixas/footer.php'; ?>
 <script>
   $('#inputEmail3').mask('000.000.000-00', {reverse: true});
   $('#vlMeta').mask('000.000.000.000.000,00', {reverse: true});
 </script>
-
-<?php include '../pFixas/footer.php'; ?>

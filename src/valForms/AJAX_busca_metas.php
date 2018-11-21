@@ -7,20 +7,21 @@
   $contador = 0;
   $retorno = "";
 
-  $periodo = explode('-',$_GET['periodo']);
+  $periodo = $_GET['periodo'];
 
-  $periodoDE = date('Ymd',strtotime(str_replace('/','-',$periodo[0])));
-  $periodoATE = date('Ymd',strtotime(str_replace('/','-',$periodo[1])));
+  //$periodoDE = date('Ymd',strtotime(str_replace('/','-',$periodo[0])));
+  //$periodoATE = date('Ymd',strtotime(str_replace('/','-',$periodo[1])));
 
 //  echo date('Ymd',strtotime($periodoDE));
 //  echo '<br>';
 //  echo date('Ymd',strtotime($periodoATE));
 
-  $periodoDE = substr($periodoDE,0,6) ;
+  //$periodoDE = substr($periodoDE,0,6) ;
 
-  $periodoATE =  substr($periodoATE,0,6);
+  //$periodoATE =  substr($periodoATE,0,6);
 
-  $sql = " SELECT * FROM METAS where ano+mes between '$periodoDE' and '$periodoATE' ";
+  //$sql = " SELECT * FROM METAS where ano+mes between '$periodoDE' and '$periodoATE' ";
+  $sql = " SELECT * FROM METAS where ano+mes = '$periodo'  ";
 
   // TODO esse resultado traz branco
   $resultado = sqlsrv_query( $conn, $sql);

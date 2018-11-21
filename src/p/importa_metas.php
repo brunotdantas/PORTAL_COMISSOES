@@ -79,6 +79,9 @@
   </div>
   <!-- /.content-wrapper -->
 
+
+<?php include '../pFixas/footer.php'; ?>
+
 <script>
 $(document).ready(function() {
 
@@ -101,5 +104,3 @@ $(document).ready(function() {
 
 
 </script>
-
-<?php include '../pFixas/footer.php'; ?>
