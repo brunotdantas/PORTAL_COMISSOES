@@ -116,8 +116,8 @@ array_push($anos,array(10,date("Y")-10));
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        Calcular comissão do mês anterior
+        <small>Para calcular a comissão do mês anterior clique no botão abaixo:</small>
       </h1>
     </section>
 
@@ -132,7 +132,7 @@ array_push($anos,array(10,date("Y")-10));
           </div>
         </div>
         <div class="box-body">
-              <label>Para calcular a comissão do mês anterior clique no botão abaixo:</label>
+
             <button  class="btn btn-block btn-primary btn-lg" onclick="getDados();">Calcular comissão</button>
 
         </div>
