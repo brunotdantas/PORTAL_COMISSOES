@@ -1,30 +1,41 @@
 
 <?php
 
-
-  $sql = " select * from param_portal where nomeParam = 'api_key_email'  ";
-
-  $resultado = sqlsrv_query( $conn, $sql);
-
-  if(sqlsrv_has_rows($resultado)){
-    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
-
-     $email_usuario = $row["conteudo_campo1"];
-     $email_senha = $row["conteudo_campo2"];
-     $apiKey = $row["conteudo_campo3"];
-
-   }
-  }
-
-  define('KEY_API_EMAIL', $apiKey);
-  define('USUARIO_API_EMAIL', $email_usuario);
-  define('SENHA_API_EMAIL', $email_senha);
-
 function mail_utf8($to, $from_email,$subject = '(No subject)', $message = ''){
 
+     $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
+     $conn = sqlsrv_connect( DB_SERVER, $connectionInfo);
+
+     if( !$conn ) {
+         // Se não conseguir logar com .\SQLEXPRESS
+         $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
+         $conn = sqlsrv_connect( 'localhost', $connectionInfo);
+     }
+
+     if (!$conn){
+         echo "Connection could not be established.<br />";
+         die( print_r( sqlsrv_errors(), true));
+     }
+
+    $sql = " select * from param_portal where nomeParam = 'api_key_email'  ";
+
+    $resultado = sqlsrv_query( $conn, $sql);
+
+    if(sqlsrv_has_rows($resultado)){
+      while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+
+       $email_usuario = $row["conteudo_campo1"];
+       $email_senha = $row["conteudo_campo2"];
+       $apiKey = $row["conteudo_campo3"];
+
+     }
+    }else{
+      echo 'Não tem resultado para :  select * from param_portal where nomeParam = api_key_email ';
+    }
+
    $url = 'https://api.sendgrid.com/';
-   $user = USUARIO_API_EMAIL;//'azure_f6c25ca15608caf53ad7245c49eaed74@azure.com';
-   $pass = SENHA_API_EMAIL;
+   $user = $email_usuario;//'azure_f6c25ca15608caf53ad7245c49eaed74@azure.com';
+   $pass = $email_senha;
 
    $params = array(
         'api_user' => $user,
@@ -60,5 +71,8 @@ function mail_utf8($to, $from_email,$subject = '(No subject)', $message = ''){
 
 
   }
-
+//}else{
+//  echo "Não existem configurações na tabela para realizar o envio do email";
+//  die();
+//}
 ?>

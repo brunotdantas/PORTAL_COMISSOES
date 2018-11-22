@@ -85,8 +85,6 @@ array_push($anos,array(10,date("Y")-10));
         // Exibi a imagem de progresso
         result.innerHTML = '<div class="overlay"><i class="fa fa-refresh fa-spin"></i> </div>';
 
-
-        alert("../valForms/AJAX_executa_comissao.php?periodo="+ periodoAnterior);
         // Iniciar uma requisição
         xmlreq.open("GET", "../valForms/AJAX_executa_comissao.php?periodo="+ periodoAnterior , true);
 

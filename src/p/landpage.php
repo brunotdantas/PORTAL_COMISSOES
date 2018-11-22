@@ -4,12 +4,12 @@
 /**
  * D E M O S T R A Ç Ã O
  * TODO: o que temos que fazer ainda
- * ! isso é um aviso importante 
- * ? Isso é uma dúvida ou uma indicação de query 
- */ 
+ * ! isso é um aviso importante
+ * ? Isso é uma dúvida ou uma indicação de query
+ */
 //// Isso é um comentário riscado
 
-// Busca Numero de lojas 
+// Busca Numero de lojas
 $nLojas = 0;
 
 $sql = " SELECT COUNT(*) nLojas FROM lojas  ";
@@ -27,6 +27,55 @@ $resultado = sqlsrv_query( $conn, $sql);
   }
 
 ?>
+
+
+<!-- FLOT CHARTS -->
+<script src="../../bower_components/Flot/jquery.flot.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="../../bower_components/Flot/jquery.flot.resize.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="../../bower_components/Flot/jquery.flot.pie.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="../../bower_components/Flot/jquery.flot.categories.js"></script>
+<!-- ChartJS -->
+<script src="../../bower_components/Chart.js/Chart.js"></script>
+
+
+
+
+<!-- page script -->
+<script>
+  $(function () {
+
+    /*
+       * BAR CHART
+       * ---------
+       */
+
+      var bar_data = {
+        data : [['January', 10], ['February', 8], ['March', 4], ['April', 13], ['May', 17], ['June', 9]],
+        color: '#3c8dbc'
+      }
+      $.plot('#bar-chart', [bar_data], {
+        grid  : {
+          borderWidth: 1,
+          borderColor: '#f3f3f3',
+          tickColor  : '#f3f3f3'
+        },
+        series: {
+          bars: {
+            show    : true,
+            barWidth: 0.5,
+            align   : 'center'
+          }
+        },
+        xaxis : {
+          mode      : 'categories',
+          tickLength: 0
+        }
+      });
+  });
+</script>
 
   <!-- =============================================== -->
 
@@ -58,12 +107,9 @@ $resultado = sqlsrv_query( $conn, $sql);
           <div class="icon">
             <i class="fa fa-shopping-cart"></i>
           </div>
-          <a href="#" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
-          </a>
         </div>
       </div> <!-- ./col -->
-    
+
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-light-blue">
@@ -74,15 +120,32 @@ $resultado = sqlsrv_query( $conn, $sql);
           <div class="icon">
             <i class="fa fa-users"></i>
           </div>
-          <a href="manut_funcionarios.php" class="small-box-footer">
-            Veja detalhes <i class="fa fa-arrow-circle-right"></i>
-          </a>
         </div>
       </div> <!-- ./col -->
+    </div>
     ';
 
       case 2:
-          echo '';
+        echo '
+
+        <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <i class="fa fa-bar-chart-o"></i>
+
+                      <h3 class="box-title">Bar Chart</h3>
+
+                      <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;"><canvas class="flot-base" width="567" height="375" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 454.2px; height: 300px;"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 21px; text-align: center;">January</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 93px; text-align: center;">February</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 175px; text-align: center;">March</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 253px; text-align: center;">April</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 329px; text-align: center;">May</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 401px; text-align: center;">June</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 270px; left: 7px; text-align: right;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 203px; left: 7px; text-align: right;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 0px; left: 1px; text-align: right;">20</div></div></div><canvas class="flot-overlay" width="567" height="375" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 454.2px; height: 300px;"></canvas></div>
+                    </div>
+                    <!-- /.box-body-->
+                  </div>
+          ';
 
       case 3:
           echo '';

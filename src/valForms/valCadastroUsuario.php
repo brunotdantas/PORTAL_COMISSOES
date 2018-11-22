@@ -66,7 +66,7 @@ switch ($botaoClicado) {
       <p>Seu login para acesso é: <b>'.$usuario.'</b></p>
       <p>Sua senha é composta pelos <b>seis primeiros dígitos do seu CPF</b></p>
       <p>Por gentileza faça o primeiro acesso clicando no link abaixo para trocar a sua senha e obter acesso ao portal.</p>
-    	<a HREF="http://localhost:8080/portal/index.php" TARGET="_blank"> Clique aqui para redefinir sua senha</a>
+    	<a HREF="http://localhost:81/portal/index.php" TARGET="_blank"> Clique aqui para redefinir sua senha</a>
     </body>
     </html>
     ';
