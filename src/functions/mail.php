@@ -66,9 +66,6 @@ function mail_utf8($to, $from_email,$subject = '(No subject)', $message = ''){
    $response = curl_exec($session);
    curl_close($session);
 
-   // print everything out
-   print_r($response);
-
 
   }
 //}else{

@@ -37,10 +37,12 @@
 
           switch ($_SESSION["cargo"]) {
             case 1:
+                echo "";
+
+            case 2:
                 echo '<li class="active"><a href="../p/cad_usuario.php"><i class="fa  fa-user-plus"></i>Manutenção de usuários</a></li>';
                 echo '<li class="active"><a href="../p/consulta_usuarios.php"><i class="fa fa-users"></i>Consulta de usuários</a></li>';
 
-            case 2:
                 echo '<li class="active"><a href="../p/manut_metas.php"><i class="fa fa-money"></i>Manutenção de metas</a></li>';
                 echo '<li class="active"><a href="../p/importa_metas.php"><i class="fa fa-money"></i>Importação de metas</a></li>';
                 echo '<li class="active"><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';

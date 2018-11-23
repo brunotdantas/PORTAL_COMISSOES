@@ -1,14 +1,6 @@
 <?php
   include '../pFixas/cabec.php';
 
-/**
- * D E M O S T R A Ç Ã O
- * TODO: o que temos que fazer ainda
- * ! isso é um aviso importante
- * ? Isso é uma dúvida ou uma indicação de query
- */
-//// Isso é um comentário riscado
-
 // Busca Numero de lojas
 $nLojas = 0;
 
@@ -26,6 +18,60 @@ $resultado = sqlsrv_query( $conn, $sql);
     $nVendedores= $dados["nVend"];
   }
 
+//Monta o array para popular o gráfico
+
+$dadosGrafico = "data : [
+                    ['January', 10],
+                    ['February', 8],
+                    ['March', 4],
+                    ['April', 13],
+                    ['May', 17],
+                    ['June', 9]
+                ],";
+
+// Busca vendas dos ultimos 12 meses
+$sql = "
+          select
+          case
+            WHEN format(dataVenda,'MM') = '01' THEN 'JANEIRO' + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '02' THEN 'FEVEREIRO'  + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '03' THEN 'MARÇO'	     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '04' THEN 'ABRIL'	     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '05' THEN 'MAIO'	     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '06' THEN 'JUNHO'	     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '07' THEN 'JULHO'	     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '08' THEN 'AGOSTO'     + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '09' THEN 'SETEMBRO'   + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '10' THEN 'OUTUBRO'    + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '11' THEN 'NOVEMBRO'   + '/' +format(dataVenda,'yyyy')
+          	WHEN format(dataVenda,'MM') = '12' THEN 'DEZEMBRO'   + '/' +format(dataVenda,'yyyy')
+          END AS MES_VENDA,
+
+          sum(convert(money,ValorTotal)) AS VENDA_MES
+
+          from VendasCabec
+          where format(dataVenda,'ddMMyyyy') >= format(getdate()-600,'ddMMyyyy')
+          group by format(dataVenda,'MM'),format(dataVenda,'yyyy')
+      ";
+
+
+  $resultado = sqlsrv_query( $conn, $sql);
+  $row_count = sqlsrv_num_rows( $resultado );
+
+  $i = 1;
+
+  $dadosGrafico = "data : [ ";
+  while($dados=sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
+    $dadosGrafico .= "['".$dados["MES_VENDA"]."',".$dados["VENDA_MES"];
+    if ($i == $row_count) {
+      $dadosGrafico .= "]";
+    }else{
+      $dadosGrafico .= "],";
+    }
+    $i++;
+  }
+  $dadosGrafico .= "],";
+
 ?>
 
 
@@ -40,9 +86,6 @@ $resultado = sqlsrv_query( $conn, $sql);
 <!-- ChartJS -->
 <script src="../../bower_components/Chart.js/Chart.js"></script>
 
-
-
-
 <!-- page script -->
 <script>
   $(function () {
@@ -53,7 +96,7 @@ $resultado = sqlsrv_query( $conn, $sql);
        */
 
       var bar_data = {
-        data : [['January', 10], ['February', 8], ['March', 4], ['April', 13], ['May', 17], ['June', 9]],
+        <?= $dadosGrafico ?>
         color: '#3c8dbc'
       }
       $.plot('#bar-chart', [bar_data], {
@@ -95,44 +138,49 @@ $resultado = sqlsrv_query( $conn, $sql);
     <?php
     switch ($_SESSION["cargo"]) {
       case 1:
-      echo '    <div class="row">
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-aqua">
-          <div class="inner">
-            <h3>'.$nLojas.'</h3>
 
-            <p>Lojas cadastradas</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-shopping-cart"></i>
-          </div>
-        </div>
-      </div> <!-- ./col -->
-
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-light-blue">
-          <div class="inner">
-            <h3>'.$nVendedores.'</h3>
-            <p>Funcionários ativos no sistema</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-users"></i>
-          </div>
-        </div>
-      </div> <!-- ./col -->
-    </div>
-    ';
+      echo '';
 
       case 2:
+
+        echo '    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>'.$nLojas.'</h3>
+
+              <p>Lojas cadastradas</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+          </div>
+        </div> <!-- ./col -->
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-light-blue">
+            <div class="inner">
+              <h3>'.$nVendedores.'</h3>
+              <p>Funcionários ativos no sistema</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+          </div>
+        </div> <!-- ./col -->
+      </div>
+      ';
+
+
         echo '
 
         <div class="box box-primary">
                     <div class="box-header with-border">
                       <i class="fa fa-bar-chart-o"></i>
 
-                      <h3 class="box-title">Bar Chart</h3>
+                      <h3 class="box-title">Relação de vendas</h3>
 
                       <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

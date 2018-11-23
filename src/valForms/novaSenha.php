@@ -28,6 +28,8 @@ if(isset($_GET['token'])){
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
@@ -38,10 +40,11 @@ if(isset($_GET['token'])){
 
       <form action="validaNovaSenha.php" method="POST">
         <div class="form-group has-feedback">
-          <input name="Novasenha" type="password" class="form-control" placeholder="Senha">
+          <input id="password" name="Novasenha" type="password" class="form-control" placeholder="Senha">
         </div>
         <div class="form-group has-feedback">
-          <input name="ConfirmarNovaSenha"type="password" class=" form-control" placeholder="Confirmar nova senha">
+          <input id="confirm_password" name="ConfirmarNovaSenha"type="password" class=" form-control" placeholder="Confirmar nova senha">
+          <span id='message'></span>
         </div>
         <div class="row">
           <div class="col-xs-8">
@@ -61,15 +64,42 @@ if(isset($_GET['token'])){
   <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="../../plugins/iCheck/icheck.min.js"></script>
+
   <script>
-  /*
-  $(function () {
-  $('input').iCheck({
-  checkboxClass: 'icheckbox_square-blue',
-  radioClass: 'iradio_square-blue',
-  increaseArea: '20%' // optional
-});
-});*/
+
+    $(function () {
+        $('#password, #confirm_password').on('keyup', function () {
+          if ($('#password').val() == $('#confirm_password').val()) {
+            $('#message').html('Senhas são iguais').css('color', 'green');
+          } else
+            $('#message').html('Senhas não são iguais').css('color', 'red');
+        });
+
+        $('form').on('submit', function(e){
+          var isvalid = false;
+          // validation code here
+
+            if ($('#password').val() == $('#confirm_password').val()) {
+              isvalid = true;
+            }
+
+            if($('#password').val()==""){
+              $('#message').html('Preencha a senha').css('color', 'red');
+              isvalid = false;
+            }
+
+          if(!isvalid) {
+            e.preventDefault();
+          }
+        });
+
+
+    });
+  </script>
+
+
+
+
 </script>
 </body>
 </html>
