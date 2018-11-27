@@ -7,11 +7,6 @@
      $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
      $conn = sqlsrv_connect( DB_SERVER, $connectionInfo);
 
-     if( !$conn ) {
-         // Se não conseguir logar com .\SQLEXPRESS
-         $connectionInfo = array( "Database"=>DB_DATABASE, "UID"=>DB_USERNAME, "PWD"=>DB_PASSWORD,"CharacterSet"=>"UTF-8");
-         $conn = sqlsrv_connect( 'localhost', $connectionInfo);
-     }
 
      if (!$conn){
          echo "Connection could not be established.<br />";
@@ -19,7 +14,7 @@
      }
 
 
-    /*
+/*
     $sql = "SELECT 'olá Mundo' as Nome";
     $stmt = sqlsrv_query( $conn, $sql);
     if( $stmt === false ) {
@@ -29,7 +24,7 @@
    while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ){
 	    echo $row['Nome']."</br>";
     }
-
 */
+
 
 ?>
