@@ -113,7 +113,7 @@ session_start();
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Portal de comissões</b></span>
+      <span class="logo-lg"><b>Portal de Comissões</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -139,7 +139,7 @@ session_start();
                 <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  <?=$_SESSION["nome"]?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>

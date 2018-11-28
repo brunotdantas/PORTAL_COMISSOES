@@ -19,7 +19,7 @@ $resultado = sqlsrv_query( $conn, $sql);
   }
 
   $ticketMedio = 0;
-  $sql = " select round(avg(cast(ValorTotal as money)),2) TICKET_MEDIO from  VendasCabec where  format([dataVenda],'MM') = format(getdate(),'MM')   ";
+  $sql = " select cast(avg(cast(ValorTotal as money)) as  numeric(10,2)) TICKET_MEDIO from  VendasCabec where  format([dataVenda],'MM') = format(getdate(),'MM')   ";
   $resultado = sqlsrv_query( $conn, $sql);
     while($dados=sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
       $ticketMedio= $dados["TICKET_MEDIO"];
@@ -29,9 +29,9 @@ $resultado = sqlsrv_query( $conn, $sql);
 // Vendedor TOP 1 vendas
 $sql = "
 SELECT top 1
-      vendas.[idVendedor]
-	  ,v.Nome
-      ,round(sum(cast([ValorTotal] as money)),2) as TOTAL_VENDIDO
+        vendas.[idVendedor]
+	     ,v.Nome
+       ,cast(sum(cast([ValorTotal] as money)) as  numeric(10,2)) as TOTAL_VENDIDO
 
   FROM [Portal].[dbo].[VendasCabec] vendas
 	inner join vendedores v on v.idVendedor = vendas.idVendedor
@@ -159,8 +159,8 @@ $sql = "
 
 <!-- page script -->
 <script>
-  $(function () {
 
+  $(function () {
     /*
        * BAR CHART
        * ---------
@@ -174,7 +174,9 @@ $sql = "
         grid  : {
           borderWidth: 1,
           borderColor: '#f3f3f3',
-          tickColor  : '#f3f3f3'
+          tickColor  : '#f3f3f3',
+          hoverable: true,
+          clickable: true
         },
         series: {
           bars: {
@@ -188,7 +190,57 @@ $sql = "
           tickLength: 0
         }
       });
+
+      $("#bar-chart").UseTooltip();
+
   });
+
+  //Initialize tooltip on hover
+  var previousPoint = null, previousLabel = null;
+
+  $.fn.UseTooltip = function () {
+      $(this).bind("plothover", function (event, pos, item) {
+          if (item) {
+              if ((previousLabel != item.series.label) || (previousPoint != item.dataIndex)) {
+                  previousPoint = item.dataIndex;
+                  previousLabel = item.series.label;
+                  $("#tooltip").remove();
+
+                  var x = item.datapoint[0];
+                  var y = item.datapoint[1];
+
+                  var color = item.series.color;
+                  var date = "R$" ;
+
+                  var unit = "";
+
+                  showTooltip(item.pageX, item.pageY, color,
+                              "<strong>Total vendido</strong><br>" + date +
+                              " : <strong>" + y + "</strong> " + unit + "");
+              }
+          } else {
+              $("#tooltip").remove();
+              previousPoint = null;
+          }
+      });
+  };
+
+  function showTooltip(x, y, color, contents) {
+      $('<div id="tooltip">' + contents + '</div>').css({
+          position: 'absolute',
+          display: 'none',
+          top: y - 40,
+          left: x - 120,
+          border: '2px solid ' + color,
+          padding: '3px',
+          'font-size': '9px',
+          'border-radius': '5px',
+          'background-color': '#fff',
+          'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+          opacity: 0.9
+      }).appendTo("body").fadeIn(200);
+  }
+
 </script>
 
   <!-- =============================================== -->
@@ -198,7 +250,7 @@ $sql = "
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Bem vindo ao portal de comissões
+        Bem vindo ao Portal de Comissões
         <small></small>
       </h1>
     </section>
@@ -281,23 +333,17 @@ $sql = "
 
         echo '
 
-        <div class="box box-primary">
-                    <div class="box-header with-border">
-                      <i class="fa fa-bar-chart-o"></i>
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">Relação de vendas de '.$mesVenda.' por dia</h3>
+            </div>
+            <div class="box-body">
+              <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
 
-                      <h3 class="box-title">Relação de vendas de '.$mesVenda.'</h3>
-
-                      <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div>
-                    <div class="box-body">
-                      <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;"><canvas class="flot-base" width="567" height="375" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 454.2px; height: 300px;"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 21px; text-align: center;">January</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 93px; text-align: center;">February</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 175px; text-align: center;">March</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 253px; text-align: center;">April</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 329px; text-align: center;">May</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 75px; top: 283px; left: 401px; text-align: center;">June</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 270px; left: 7px; text-align: right;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 203px; left: 7px; text-align: right;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 1px; text-align: right;">10</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 68px; left: 1px; text-align: right;">15</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 0px; left: 1px; text-align: right;">20</div></div></div><canvas class="flot-overlay" width="567" height="375" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 454.2px; height: 300px;"></canvas></div>
-                    </div>
-                    <!-- /.box-body-->
-                  </div>
           ';
 
       case 3:
