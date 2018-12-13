@@ -37,11 +37,11 @@ if(sqlsrv_has_rows($resultado)){
     if($habilitado == 1){
       $campo_desativar_usuario="unchecked";
       $labelBotaoDesativar='Desativar';
-      $modalDesativar ='#modal-danger';      
-    }else{      
+      $modalDesativar ='#modal-danger';
+    }else{
       $campo_desativar_usuario="checked";
       $labelBotaoDesativar='Ativar';
-      $modalDesativar ='#modal-info2';  
+      $modalDesativar ='#modal-info2';
     }
 
   }
@@ -62,7 +62,7 @@ if(sqlsrv_has_rows($resultado)){
   $campo_desativar_usuario="unchecked";
   $labelBotaoDesativar= 'Desativar';
   $modalDesativar ='#modal-info2';
-  
+
   $btn_salvar="enable";
   $btn_alterar="disabled";
   $btn_desativar="disabled";
@@ -94,18 +94,18 @@ if(sqlsrv_has_rows($resultado)){
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2  control-label">Nome</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="nome"  placeholder="Nome" value="<?php echo $campo_nome ?>" >
+              <input required type="text" class="form-control" name="nome"  placeholder="Nome" value="<?php echo $campo_nome ?>" >
             </div>
             <label for="inputEmail3" class="col-sm-2 control-label">Login</label>
             <div class="col-sm-3">
-              <input type="text" <?php echo($existe == 1 ? 'readonly' : '') ?> class="form-control" name="usuario" id="inputEmail3" placeholder="Usuário" value=<?php echo $campo_usuario ?>>
+              <input required type="text" <?php echo($existe == 1 ? 'readonly' : '') ?> class="form-control" name="usuario" id="inputEmail3" placeholder="Usuário" value=<?php echo $campo_usuario ?>>
             </div>
           </div>
           <!-- =================================== Campo EMAIL========================================= -->
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-5">
-              <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="Email" value=<?php echo $campo_email ?>>
+              <input required type="email" class="form-control" name="email" id="inputEmail3" placeholder="Email" value=<?php echo $campo_email ?>>
             </div>
           </div>
 

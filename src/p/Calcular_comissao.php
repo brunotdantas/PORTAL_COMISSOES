@@ -70,11 +70,6 @@ array_push($anos,array(10,date("Y")-10));
      * Função para enviar os dados
      */
     function getDados() {
-      //var x = new Date();
-      //x.setDate(1);
-      //x.setMonth(x.getMonth()-1);
-      //alert(moment().subtract(1, 'month') .calendar() );
-      //alert(moment());
 
         // Declaração de Variáveis
         var periodoAnterior = new Date();

@@ -17,20 +17,22 @@ for ($i=1; $i <=$numFatores ; $i++) {
     $valor = (empty($_POST["Valor$i"]) ? 'NULL' : $_POST["Valor$i"]);
     $aplica = $_POST["aplica$i"];
     $descFator = $_POST["descFator$i"];
-    
+    $tpPagamento = $_POST["tpPagamento$i"];
+
     $sql = " IF EXISTS (SELECT idFator FROM fatores where idFator = $idFator) ";
     $sql .= " begin ";
     $sql .= "   update fatores set " ;
     $sql .= "     ativo			= $ativo	,  ";
-    $sql .= "     vlPorcentagem	= $porcentagem	, "; 
+    $sql .= "     vlPorcentagem	= $porcentagem	, ";
     $sql .= "     vlReais			= $valor	, ";
     $sql .= "     descricaoFator	= '$descFator'	, " ;
-    $sql .= "     idCargo			= '$aplica' ";
+    $sql .= "     idCargo			= '$aplica', ";
+    $sql .= "     tpPagamento			= '$tpPagamento' ";
     $sql .= "    where ";
     $sql .= "     idFator = $idFator ";
     $sql .= " end ";
-    $sql .= " else insert into  fatores(ativo, vlPorcentagem, vlReais,descricaoFator,idCargo)  ";
-    $sql .= " VALUES ($ativo,$porcentagem,$valor,'$descFator',$aplica)  "; 
+    $sql .= " else insert into  fatores(ativo, vlPorcentagem, vlReais,descricaoFator,idCargo,tpPagamento)  ";
+    $sql .= " VALUES ($ativo,$porcentagem,$valor,'$descFator',$aplica,'$tpPagamento')  ";
 
     $flag = 1;//sucesso
     if(sqlsrv_query( $conn, $sql)){

@@ -36,7 +36,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Faça o seu login para começar a sessão</p>
+    <p class="login-box-msg">Faça o seu login abaixo</p>
 
     <form action="src/valForms/validaLogin.php" method="POST">
       <div class="form-group has-feedback">

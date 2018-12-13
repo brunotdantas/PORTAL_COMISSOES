@@ -40,30 +40,47 @@
                 echo "";
 
             case 2:
-                echo '<li class="active"><a href="../p/cad_usuario.php"><i class="fa  fa-user-plus"></i>Manutenção de usuários</a></li>';
-                echo '<li class="active"><a href="../p/consulta_usuarios.php"><i class="fa fa-users"></i>Consulta de usuários</a></li>';
+                echo '
+                  <li class="treeview">
+                    <a href="#">
+                      <i class="fa  fa-users"></i> <span>USUÁRIOS</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                      <li class="active"><a href="../p/cad_usuario.php"><i class="fa  fa-user-plus"></i>Manutenção de usuários</a></li>
+                      <li class="active"><a href="../p/consulta_usuarios.php"><i class="fa fa-user"></i>Consulta de usuários</a></li>
+                    </ul>
+                  </li>
+                ';
 
-                echo '<li class="active"><a href="../p/manut_metas.php"><i class="fa fa-money"></i>Manutenção de metas</a></li>';
-                echo '<li class="active"><a href="../p/importa_metas.php"><i class="fa fa-money"></i>Importação de metas</a></li>';
-                echo '<li class="active"><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';
-//                echo '<li class="active"><a href="../p/manut_funcionarios.php"><i class="fa fa-users"></i>Manutenção de funcionários</a></li>';
-                echo '<li class="active"><a href="../p/Calcular_comissao.php"><i class="fa fa-dollar"></i>Calcular comissão</a></li>';
+                echo '
+                  <li class="treeview">
+                    <a href="#">
+                      <i class="fa fa-crosshairs"></i> <span>METAS</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                      <li CLASS="active"><a href="../p/importa_metas.php"><i class="fa fa-cloud-upload"></i>Importação de metas</a></li>
+                      <li CLASS="active"><a href="../p/manut_metas.php"><i class="fa fa-wrench"></i>Manutenção de metas</a></li>
+                    </ul>
+                  </li>
+                ';
 
+                echo '<li><a href="../p/cad_fatcalc.php"><i class="fa fa-percent"></i>Cadastro de fat. de cálc.</a></li>';
+
+                echo '<li class=""><a href="../p/Calcular_comissao.php"><i class="fa fa-magic"></i>Calcular comissão</a></li>';
 
             case 3:
-                echo '<li class="active"><a href="../p/Comissoes_calculadas.php"><i class="fa fa-money"></i>Comissões já calculadas</a></li>';
+                echo '<li><a href="../p/Comissoes_calculadas.php"><i class="fa fa-file-text-o "></i>Comissões já calculadas</a></li>';
           }
 
         ?>
 
-
-
-
-
-
         </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-        <li><a href="../../index2.html"><i class="fa fa-book"></i> <span>Exemplos</span></a></li>
 
 
       </ul>

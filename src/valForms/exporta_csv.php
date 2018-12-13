@@ -9,7 +9,7 @@ $periodo = $_GET['periodo'];
 
 // Your query
 $sql = "
-  select distinct c.periodo,v.Nome,v.CPF,c.valor_a_pagar from comissoes_calculadas c
+  select distinct c.periodo,v.Nome,v.CPF,convert(numeric(14,2), c.valor_a_pagar) from comissoes_calculadas c
   inner join vendedores v on c.idVendedor = v.idVendedor
   where c.periodo = '$periodo'
 ";

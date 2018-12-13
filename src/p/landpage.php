@@ -1,6 +1,8 @@
 <?php
   include '../pFixas/cabec.php';
 
+   $_SESSION['cpf'] = 'admin';
+
 // Busca Numero de lojas
 $nLojas = 0;
 
@@ -19,7 +21,7 @@ $resultado = sqlsrv_query( $conn, $sql);
   }
 
   $ticketMedio = 0;
-  $sql = " select cast(avg(cast(ValorTotal as money)) as  numeric(10,2)) TICKET_MEDIO from  VendasCabec where  format([dataVenda],'MM') = format(getdate(),'MM')   ";
+  $sql = " select cast(avg(cast(ValorTotal as money)) as  numeric(10,2)) TICKET_MEDIO from  VendasCabec where  format([dataVenda],'MM') = format(dateadd(month,-1,getdate()),'MM')   ";
   $resultado = sqlsrv_query( $conn, $sql);
     while($dados=sqlsrv_fetch_array($resultado,SQLSRV_FETCH_ASSOC)){
       $ticketMedio= $dados["TICKET_MEDIO"];
@@ -35,7 +37,7 @@ SELECT top 1
 
   FROM [Portal].[dbo].[VendasCabec] vendas
 	inner join vendedores v on v.idVendedor = vendas.idVendedor
-  where  format([dataVenda],'MM') = format(getdate(),'MM')
+  where  format([dataVenda],'MM') = format(dateadd(month,-1,getdate()),'MM')
   group by vendas.[idVendedor],Nome
    order by sum(cast([ValorTotal] as money)) desc
    ";
@@ -67,14 +69,14 @@ $sql = "
           sum(convert(money,ValorTotal)) AS VENDA_MES
 
           from VendasCabec
-          where format(dataVenda,'ddMMyyyy') >= format(getdate()-600,'ddMMyyyy')
+          where format(dataVenda,'ddMMyyyy') >= format(dateadd(month,-1,getdate()),'ddMMyyyy')
           group by format(dataVenda,'MM'),format(dataVenda,'yyyy')
       ";
 
 
       $sql = "
-        DECLARE @DataINI varchar(30) = FORMAT(DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()),   0 ),'yyyyMMdd')
-        DECLARE @DataFIM varchar(30) = FORMAT(DATEADD(MONTH, DATEDIFF(MONTH, -1, GETDATE()), -1),'yyyyMMdd')
+        DECLARE @DataINI varchar(30) = format(dateadd(month,-1,FORMAT(DATEADD(MONTH, DATEDIFF(MONTH,  0,  GETDATE()), 0 ),'yyyyMMdd')),'yyyyMMdd')
+        DECLARE @DataFIM varchar(30) = format(dateadd(month,-1,FORMAT(DATEADD(MONTH, DATEDIFF(MONTH, -1, GETDATE()), -1),'yyyyMMdd') ),'yyyyMMdd')
         declare @curDate datetime = @dataINI
         begin try drop table #days end try begin catch end catch
         select @curDate as DataVenda ,0 qtdVenda into #days
@@ -90,6 +92,7 @@ $sql = "
         left join VendasCabec v on v.dataVenda = d.DataVenda
         group by d.DataVenda
       ";
+
 
   $resultado = sqlsrv_query( $conn, $sql);
   if( $resultado === false ) {

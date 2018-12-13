@@ -35,10 +35,52 @@
     var_dump(sqlsrv_errors());
   }
 
-  if ($status == 5) {
-    echo '<hr>'."Linhas inseridas com sucesso";
-  }else{
-    echo '<hr>'."Falha no calculo de comissão ou <b>período já calculado</b>";
+
+  $sql = " select resultados from resultado_comissoes ";
+  $resultado = sqlsrv_query( $conn, $sql);
+  if (sqlsrv_has_rows( $resultado )){
+    // Se encontrou usuario e senha
+
+
+    while( $row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC) ){
+      switch ($row["resultados"]) {
+        case 0:
+          echo '
+            <hr>
+            <div class="callout callout-success">
+              <h4>Comissões calculadas com sucesso, verifique o resultado na rotina "Comissões Já Calculadas"!</h4>
+            </div>
+          ';
+          break;
+        case 3:
+          echo '
+            <hr>
+            <div class="callout callout-warning">
+              <h4> Não existem METAS CADASTRADAS para o período anterior</h4>
+            </div>
+          ';
+          break;
+        case 4:
+          echo '
+            <hr>
+            <div class="callout callout-danger">
+              <h4> Período anterior já calculado</h4>
+            </div>
+          ';
+          break;
+        default:
+          echo $status;
+          break;
+      }
+    }
   }
+
+echo '<br>Verifique as comissões já calculadas clicando no <a href="../p/comissoes_calculadas.php">Aqui</a> ';
+
+//  if ($status == 5) {
+//    echo '<hr>'."Linhas inseridas com sucesso";
+//  }else{
+//    echo '<hr>'."Falha no calculo de comissão ou <b>período já calculado</b>";
+//  }
 
 ?>

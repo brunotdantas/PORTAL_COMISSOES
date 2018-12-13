@@ -1,5 +1,5 @@
 <?php
-// TODO: 1. Pensar em como adicionar dinamicamente os fatores, ou seja 
+// TODO: 1. Pensar em como adicionar dinamicamente os fatores, ou seja
 // TODO:    o próprio usuário poder adicionar
 
   include '../pFixas/cabec.php';
@@ -29,6 +29,44 @@
 
 ?>
 
+<script>
+$(document).ready(function(){
+
+$( "#checkbox1:checkbox" ).change(
+	function(){
+      var isChecked = $( "#checkbox1" ).prop("checked");
+
+          if (!isChecked){
+            $("#porcentagem").attr('readonly',true);
+            $("#campoNumero").attr('readonly',true);
+            $( "#campoNumero" ).val("");
+            $( "#porcentagem" ).val("");
+          }else{
+            $("#porcentagem").attr('readonly',false);
+          }
+});
+
+$( "#checkbox1:checkbox" ).change(
+	function(){
+      var isChecked = $( "#checkbox1" ).prop("checked");
+
+          if (!isChecked){
+            $("#porcentagem").attr('readonly',true);
+            $("#campoNumero").attr('readonly',true);
+            $( "#campoNumero" ).val("");
+            $( "#porcentagem" ).val("");
+          }else{
+            $("#porcentagem").attr('readonly',false);
+          }
+});
+
+
+
+
+});
+
+</script>
+
 //--- Modelo principal
 <!-- =============================================== -->
   <!-- Content Wrapper. Contains page content -->
@@ -57,7 +95,7 @@
                   <table class="table table-bordered text-center">
                     <tbody>
                     <tr>
-                      <th colspan="6">Regras existentes para fatores de cálculo</th>
+                      <th colspan="7">Regras existentes para fatores de cálculo</th>
                     </tr>
                     <tr>
                       <th>ID Regra</th>
@@ -66,6 +104,7 @@
                       <th>Descrição do Fator</th>
                       <th>Porcentagem aplicada</th>
                       <th>Valor pago</th>
+                      <th>Qual o tipo de pagamento</th>
                     </tr>
 
                   <?php
@@ -73,8 +112,19 @@
                     $contador = 0;
 
                     $sql = "
-                    SELECT idFator ,descricaoFator ,vlPorcentagem ,vlReais ,ativo ,create_time ,update_time ,cl.idCargo,cl.Descricao FROM fatores f 
-                    inner join Cargo_Lojas cl on cl.idCargo =  f.idCargo                 
+                      SELECT
+                        idFator ,
+                        descricaoFator ,
+                        cast(convert(numeric(10,2), vlPorcentagem) as varchar) as vlPorcentagem ,
+                        cast(convert(numeric(10,2), vlReais) as varchar) as vlReais ,
+                        ativo ,
+                        create_time ,
+                        update_time ,
+                        cl.idCargo,
+                        cl.Descricao,
+                        isnull(tpPagamento,'') as tpPagamento
+                      FROM fatores f
+                      inner join Cargo_Lojas cl on cl.idCargo =  f.idCargo
                     ";
 
                     $resultado = sqlsrv_query( $conn, $sql);
@@ -85,13 +135,13 @@
                       //print_r($row);
 
                         $ativo          = ($row["ativo"] == 1 ? 'checked' : '');
-
                         $descricaoFator = $row["descricaoFator"];
                         $vlPorcentagem  = $row["vlPorcentagem"];
                         $valor          = $row["vlReais"];
                         $seAplicaA      = $row["Descricao"];
                         $idCargo        = $row["idCargo"];
                         $idFator        = $row["idFator"];
+                        $tpPagamento    = $row["tpPagamento"];
 
                         $contador++;
 
@@ -101,13 +151,13 @@
                             <input class="form-control"  type="text" name="idFat'.$contador.'" value="'.$idFator.'" readonly>
                           </td>
                           <td>
-                            <input type="checkbox" name="ativo'.$contador.'" '.$ativo.'>
+                            <input id="checkbox1" type="checkbox" name="ativo'.$contador.'" '.$ativo.'>
                           </td>
                           <td>'.$seAplicaA.'</td> <input type="hidden" name="aplica'.$contador.'" value="'.$idCargo.'">
-                          <td>'.$descricaoFator.'</td><input type="hidden" name="descFator'.$contador.'" value="'.$descricaoFator.'">                            
+                          <td>'.$descricaoFator.'</td><input type="hidden" name="descFator'.$contador.'" value="'.$descricaoFator.'">
                           <td>
                             <div class="input-group">
-                              <input class="form-control" onkeypress="return isNumberKey(event)"   type="text" name="Porcentagem'.$contador.'" value="'.$vlPorcentagem.'" '.($row["vlPorcentagem"] === NULL ? "readonly" : '').'>
+                              <input id="porcentagem" class="form-control" onkeypress="return isNumberKey(event)"   type="text" name="Porcentagem'.$contador.'" value="'.$vlPorcentagem.'" '.($row["vlPorcentagem"] === NULL ? "readonly" : '').'>
                               <span class="input-group-addon">%</span>
                             </div>
                           </td>
@@ -117,6 +167,53 @@
                               <span class="input-group-addon">R$</span>
                             </div>
                           </td>
+                          <td>
+                              <select name="tpPagamento'.$contador.'" >
+';
+                              switch ($tpPagamento) {
+                                case '0':
+                                  echo (
+                                    '
+                                    <option selected="selected" Value="0">Bônus Fixo por porcentagem atingida</option>
+                                    <option Value="1">Porcentagem paga em cima do valor total da loja</option>
+                                    <option Value="2">Porcentagem paga em cima do valor total do Vendedor</option>
+                                    '
+                                  );
+                                  break;
+
+                                case '1':
+                                  echo (
+                                    '
+                                    <option Value="0">Bônus Fixo por porcentagem atingida</option>
+                                    <option selected="selected" Value="1">Porcentagem paga em cima do valor total da loja</option>
+                                    <option Value="2">Porcentagem paga em cima do valor total do Vendedor</option>
+                                    '
+                                  );
+                                  break;
+
+                                case '2':
+                                  echo (
+                                    '
+                                    <option Value="0">Bônus Fixo por porcentagem atingida</option>
+                                    <option Value="1">Porcentagem paga em cima do valor total da loja</option>
+                                    <option selected="selected" Value="2">Porcentagem paga em cima do valor total do Vendedor</option>
+                                    '
+                                  );
+                                  break;
+
+                                default:
+                                  echo '
+                                  <option selected="selected" Value="0">Bônus Fixo por porcentagem atingida</option>
+                                  <option Value="1">Porcentagem paga em cima do valor total da loja</option>
+                                  <option Value="2">Porcentagem paga em cima do valor total do Vendedor</option>
+                                  ';
+                                  break;
+                              }
+'.
+
+                              </select>
+                          </td>
+
                         </tr>
                         ';
                       }
@@ -136,9 +233,5 @@
   </div>
   <!-- /.content-wrapper -->
 
-<script>
-$(document).ready(function() {
-});
-</script>
 
 <?php include '../pFixas/footer.php'; ?>
