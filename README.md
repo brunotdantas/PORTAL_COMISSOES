@@ -16,3 +16,7 @@ Após o cadastro de informações a ferramenta deve realizar o cálculo,  armaze
 
 Aprovado pela banca no dia  12/12/2018
 
+**TO DO:**
+- Montar modelagem do banco de integração
+- Fazer procedure que importa informações do banco de integrações
+  - Montar retorno de processamento do job diário 
