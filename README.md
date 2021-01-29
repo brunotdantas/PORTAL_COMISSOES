@@ -1,4 +1,6 @@
-# Portal de Comissões - Projeto TCC - UMC 2018 #
+# Portal de Comissões automatizadas - Projeto TCC - UMC 2018 #
+
+![image](https://user-images.githubusercontent.com/19207320/106289498-1d04cd80-6228-11eb-9a0f-c6d229118849.png)
 
 ### Autores: Bruno Dantas e Alexandre Mandri ###
 
