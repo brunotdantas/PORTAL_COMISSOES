@@ -35,7 +35,7 @@
     "bootstrap-daterangepicker": "^3.0.3",
     "bootstrap-slider": "^10.3.2",
     "bootstrap-timepicker": "^0.5.2",
-    "chart.js": "2.7.*",
+    "chart.js": "2.9.*",
     "ckeditor": "^4.11.1",
     "datatables.net": "^1.10.19",
     "datatables.net-bs": "^1.10.19",
