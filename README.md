@@ -17,8 +17,3 @@ Para que a plataforma realize os cálculos foram criadas estruturas de tabelas p
 Após o cadastro de informações a ferramenta deve realizar o cálculo,  armazenar o resultado e permitir a consulta e extração destas informações, que normalmente é feita pelo time de RH que por sua vez faz o lançamento do valor comissionado de cada funcionário em seu sistema específico. 
 
 Aprovado pela banca no dia  12/12/2018
-
-**TO DO:**
-- Montar modelagem do banco de integração
-- Fazer procedure que importa informações do banco de integrações
-  - Montar retorno de processamento do job diário 
