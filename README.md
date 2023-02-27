@@ -1,7 +1,5 @@
 # Portal de Comissões automatizadas - Projeto TCC - UMC 2018 #
 
-![image](https://user-images.githubusercontent.com/19207320/106289498-1d04cd80-6228-11eb-9a0f-c6d229118849.png)
-
 ### Autores: Bruno Dantas e Alexandre Mandri ###
 
 **Proposta do trabalho:**
@@ -16,4 +14,13 @@ Para que a plataforma realize os cálculos foram criadas estruturas de tabelas p
 
 Após o cadastro de informações a ferramenta deve realizar o cálculo,  armazenar o resultado e permitir a consulta e extração destas informações, que normalmente é feita pelo time de RH que por sua vez faz o lançamento do valor comissionado de cada funcionário em seu sistema específico. 
 
-Aprovado pela banca no dia  12/12/2018
+Para a parte visual e comportamental (front-end) foi utilizado o framework [ADMIN LTE](https://adminlte.io/) como principal biblioteca CSS e JS, esta utiliza como base o [Bootstrap](https://getbootstrap.com/).
+Como banco de dados foi utilizado o SQL Server
+Para execução de cálculo foi implementada procedures em T-SQL (Transact SQL) no banco 
+Para controle de sessão, exibição das informações, comunicação com fontes externas foi usado o PHP para controle Server Side da aplicação 
+
+Os requisitos funcionais entregues neste projeto:
+
+![image](https://user-images.githubusercontent.com/19207320/221709378-60ea15ee-7782-46db-88af-196b07e2b30e.png)
+
+O projeto funcionando foi apresentado e aprovado pela banca no dia 12/12/2018
